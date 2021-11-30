@@ -1,8 +1,8 @@
 import fastify from "fastify";
+import initializeDatabase from "./src/db/config/connection";
 
 
 const server = fastify()
-
 
 server.get('/home', async (request, reply) => {
     return "home"
@@ -10,8 +10,8 @@ server.get('/home', async (request, reply) => {
 })
 
 
-
 server.listen(5000, (err, address) => {
+    initializeDatabase()
     if(err) {
         console.log(err)
         process.exit(1)
