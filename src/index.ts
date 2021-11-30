@@ -1,8 +1,11 @@
 import fastify from "fastify";
 import initializeDatabase from "./db/config/connection";
-
+import dotenv from 'dotenv'
 
 const server = fastify()
+
+dotenv.config();
+
 
 server.get('/home', async (request, reply) => {
     return "home"
