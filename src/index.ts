@@ -3,14 +3,17 @@ import initializeDatabase from "./db/config/connection";
 import dotenv from 'dotenv'
 
 const server = fastify()
+const port = process.env.PORT
 
 dotenv.config();
 
 
 server.get('/home', async (request, reply) => {
-    return "home"
+    reply.send('Hello World')
 
 })
+
+
 
 
 server.listen(5000, (err, address) => {

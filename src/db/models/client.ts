@@ -1,24 +1,40 @@
 import sequelize from "../config/config";
-import Sequelize from 'sequelize'
+import Sequelize, { DataTypes, Model } from 'sequelize'
 
-const Client = sequelize.define('Client', {
-    id: {
-        type: Sequelize.INTEGER,
-        primaryKey:true,
-        autoIncrement:true,
-        allowNull:false
-    },
-    firstName: {
-        type: Sequelize.STRING,
 
+
+interface ClientInstance extends Model {
+    id: number,
+    name:string,
+    lastname: string | null, 
+    age:number,
+}
+
+
+const Client = sequelize.define<ClientInstance>("Client",
+    {
+        id:{
+            type: DataTypes.INTEGER.UNSIGNED,
+            autoIncrement:true,
+            primaryKey:true,
+        },
+        name: {
+            type: new DataTypes.STRING,
+            allowNull: false,
+        },
+        lastname: {
+            type: new DataTypes.STRING,
+            allowNull: true
+        },
+        age: {
+            type: new DataTypes.INTEGER,
+            allowNull:false
+        }
     },
-    lastName: {
-        type: Sequelize.STRING
-    },
-    age: {
-        type: Sequelize.INTEGER
+    {
+        tableName:"Client"
     }
-})
+)
 
 
 export default Client;
