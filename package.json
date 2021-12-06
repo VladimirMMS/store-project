@@ -5,16 +5,26 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "ts-node ./src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^3.24.1"
+    "@types/bluebird": "^3.5.36",
+    "@types/validator": "^13.7.0",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.24.1",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.12.0-alpha.1",
+    "sequelize-fastify": "^1.0.9"
   },
   "devDependencies": {
-    "@types/node": "^16.11.10",
+    "@types/node": "^16.11.11",
+    "sequelize-cli": "^6.3.0",
+    "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
   }
 }
