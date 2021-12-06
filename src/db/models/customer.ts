@@ -11,7 +11,7 @@ interface ClientInstance extends Model {
 }
 
 
-const Client = sequelize.define<ClientInstance>("Client",
+const Customer = sequelize.define<ClientInstance>("Customer",
     {
         id:{
             type: DataTypes.INTEGER.UNSIGNED,
@@ -32,9 +32,9 @@ const Client = sequelize.define<ClientInstance>("Client",
         }
     },
     {
-        tableName:"Client"
+        tableName:"Customer"
     }
 )
 
 
-export default Client;
+export default Customer;
