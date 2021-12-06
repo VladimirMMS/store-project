@@ -4,7 +4,6 @@ import dotenv from 'dotenv'
 import clientRoute from './route/client.controller'
 
 
-
 const server = fastify()
 const port = process.env.PORT
 dotenv.config();
@@ -14,14 +13,11 @@ interface IQuerystring {
     string: string
 }
 
-
 server.get<{
     Querystring: IQuerystring}>('/', async (request, reply) => {
     return "home"
 
 })
-
-
 
 server.listen(5000, (err, address) => {
     initializeDatabase()
