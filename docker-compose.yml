@@ -1,14 +1,17 @@
-version: '3'
-
-services:
+version: '3.1'
+services :
   store-db:
     image: postgres
-    container_name: store-db
-    restart: always
     ports:
-      - 8181:8181
-    env_file:
-      ./.env
+      - "5432:5432"
+    env_file: './.env'
+  admin:
+    image: adminer
+    restart: always
+    depends_on: 
+      - store-db
+    ports:
+      - 8080:8080
   
   
     
