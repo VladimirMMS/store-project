@@ -1,17 +1,18 @@
 import { Dialect, Sequelize } from "sequelize";
+import dotenv from 'dotenv'
 
+dotenv.config();
 
-const dbName = process.env.DB_NAME as string
-const dbUser = process.env.DB_USER as string
+const dbName = process.env.POSTGRES_DB as string
+const dbUser = process.env.POSTGRES_USER as string
 const dbHost = process.env.DB_HOST
-const dbDialect = process.env.dbDialect as Dialect
-const dbPassword = process.env.DB_PASSWORD
+const dbDialect = process.env.DB_DIALECT as Dialect
+const dbPassword = process.env.POSTGRES_PASSWORD
 
-const sequelizeConnection = new Sequelize('store', 'postgres', '20012020', {
-    host:'localhost',
+const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
+    host:dbHost,
     dialect:'postgres'
 })
-
 
 
 

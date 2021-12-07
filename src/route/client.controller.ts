@@ -1,4 +1,4 @@
-
+import Customer from '../db/models/customer'
 
 interface ClientInter {
     url:any,
@@ -7,10 +7,19 @@ interface ClientInter {
 }
 
 const route:ClientInter = {
-    url:'/client',
+    url:'/customer',
     method:'POST',
-    handler: (request:any, reply:any) => {
-        reply.send(request.body)
+    handler: async(request:any, reply:any) => {
+        const {name, lastname, age} = request.body
+        const customer = await Customer.create({
+            name,
+            lastname,
+            age
+        })
+
+        
+        reply.send("ok")
+
     }
 }
 
