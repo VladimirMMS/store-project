@@ -1,8 +1,7 @@
 import fastify from "fastify";
-import initializeDatabase from "./db/config/connection";
 import dotenv from 'dotenv'
 import clientRoute from './route/client.controller'
-
+import db from '../db/models'
 
 const server = fastify()
 const port = process.env.PORT
@@ -19,8 +18,11 @@ server.get<{
 
 })
 
+
 server.listen(5000, (err, address) => {
-    initializeDatabase()
+    db.sequelize.sync({force:true}).then(() => {
+        return ""
+    })
     if(err) {
         console.log(err)
         process.exit(1)
