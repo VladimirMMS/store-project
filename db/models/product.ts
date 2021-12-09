@@ -26,7 +26,7 @@ module.exports = (sequelize:any, DataTypes:any) => {
     }
   };
   
-    module.exports = Product.init({
+    Product.init({
     id: {
       type: DataTypes.INTEGER,
       allowNull:false,

@@ -16,7 +16,7 @@ interface CustomerAttribute {
 }
 
 
-(sequelize:any, DataTypes:any) => {
+module.exports = (sequelize:any, DataTypes:any) => {
   class Customer extends Model<CustomerAttribute>{
     id!:string;
     name!:string;
