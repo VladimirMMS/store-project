@@ -25,7 +25,9 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.ts');
   })
   .forEach((file: any) => {
+    console.log(Sequelize.DataTypes)
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    console.log(file)
     db[model.name] = model;
   });
 
