@@ -24,7 +24,6 @@ module.exports = (sequelize:any, DataTypes:any) => {
     age!:number
 
     static associate(models:any) {
-      // define association here
     }
   };
   

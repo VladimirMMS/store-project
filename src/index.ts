@@ -1,6 +1,6 @@
 import fastify from "fastify";
 import dotenv from 'dotenv'
-import clientRoute from './route/client.controller'
+import clientRoute from './route/product/route'
 import db from '../db/models'
 
 const server = fastify()
