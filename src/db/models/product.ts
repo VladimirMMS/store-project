@@ -12,7 +12,7 @@ interface ProductAttribute {
   
 }
 
-module.exports = (sequelize:any, DataTypes:any) => {
+export = (sequelize:any, DataTypes:any) => {
   class Product extends Model<ProductAttribute>{
     id!:number;
     name!:string;
