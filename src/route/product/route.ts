@@ -1,8 +1,6 @@
 import getAllProduct from './controllers/getProducts'
 import fb from "fastify-plugin"
-import fastify from "fastify";
 
-const app = fastify()
 
 
 export default fb(async(server:any, opts:any, next:any) => {
@@ -26,6 +24,4 @@ export default fb(async(server:any, opts:any, next:any) => {
         handler: getAllProduct
       })
 })
-
-
 
