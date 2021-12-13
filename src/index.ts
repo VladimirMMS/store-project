@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 import productRoute from './route/product/route'
 import db from '../db/models'
 
-
 const server = fastify()
 const port = process.env.PORT
 dotenv.config();
@@ -19,7 +18,6 @@ server.get<{
     return "home"
 
 })
-
 
 server.listen(5000, (err, address) => {
     db.sequelize.sync({force:true}).then(() => {
