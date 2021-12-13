@@ -16,7 +16,7 @@ interface CustomerAttribute {
 }
 
 
-module.exports = (sequelize:any, DataTypes:any) => {
+export = (sequelize:any, DataTypes:any) => {
   class Customer extends Model<CustomerAttribute>{
     id!:string;
     name!:string;
@@ -24,9 +24,6 @@ module.exports = (sequelize:any, DataTypes:any) => {
     age!:number
 
     static associate(models:any) {
-      Customer.belongsToMany(models.Product, {
-        through:'ProductVSCustomer'
-      })
     }
   };
   
