@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import dotenv from 'dotenv'
 import productRoute from './route/product/route'
-import db from '../db/models'
+import db from './db/models'
 
 const server = fastify()
 const port = process.env.PORT
