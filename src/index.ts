@@ -1,12 +1,14 @@
 import fastify from "fastify";
 import dotenv from 'dotenv'
-import clientRoute from './route/product/route'
+import productRoute from './route/product/route'
 import db from '../db/models'
+
 
 const server = fastify()
 const port = process.env.PORT
 dotenv.config();
-server.route(clientRoute)
+
+server.register(productRoute)
 
 interface IQuerystring {
     string: string

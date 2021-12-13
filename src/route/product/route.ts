@@ -1,17 +1,31 @@
-import db from '../../../db/models'
 import getAllProduct from './controllers/getProducts'
+import fb from "fastify-plugin"
+import fastify from "fastify";
 
-interface ClientInter {
-    url:any,
-    method:any,
-    handler: any
-}
-
-const route:ClientInter = {
-    url:'/product',
-    method:'GET',
-    handler: getAllProduct
-}
+const app = fastify()
 
 
-export default route;
+export default fb(async(server:any, opts:any, next:any) => {
+    server.route({
+        method: 'GET',
+        url: '/product',
+        schema: {
+          querystring: {
+            name: { type: 'string' },
+            excitement: { type: 'integer' }
+          },
+          response: {
+            200: {
+              type: 'object',
+              properties: {
+                hello: { type: 'string' }
+              }
+            }
+          }
+        },
+        handler: getAllProduct
+      })
+})
+
+
+

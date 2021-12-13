@@ -10,7 +10,6 @@ const Customer = require('./customer')
 const db:any = {};
 
 
-console.log(Customer)
 let sequelize: any;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -26,7 +25,6 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.ts');
   })
   .forEach((file: any) => {
-    console.log(Sequelize.DataTypes)
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });
