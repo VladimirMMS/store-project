@@ -27,6 +27,7 @@ export = (sequelize:any, DataTypes:any) => {
     Product.init({
     id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull:false,
       primaryKey:true
     },
@@ -38,10 +39,6 @@ export = (sequelize:any, DataTypes:any) => {
       type: DataTypes.INTEGER,
       allowNull:false
     },
-    customer_id: {
-      type: DataTypes.STRING,
-      allowNull:false
-    }
   }, {
     sequelize,
     modelName: 'Product',
