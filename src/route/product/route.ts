@@ -23,9 +23,9 @@ const option = {
 function productRoute(fastify:any, opt:any, done:any) {
 
   fastify.get('/product', getAllProduct);
-  fastify.get('/product/:id', option, getAllProductById);
+  fastify.get('/product/:id',getAllProductById);
   fastify.post('/product', option, createProduct);
-  fastify.put('/product', option, updateProduct);
+  fastify.put('/product/:id', updateProduct);
   fastify.delete('/product', option, getAllProduct);
   done();
   
