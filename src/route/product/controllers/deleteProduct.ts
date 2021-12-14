@@ -1,14 +1,18 @@
 import db from '../../../db/models/index'
 
 
-export async function deleteProjectById(request:any, resply:any) {
+export async function deleteProducttById(request:any, resply:any) {
     
     const {Product} = db
-
-    const product = await Product.destroy({
-        where: {
-            id: request.params.id
-        }
-    })
-    resply.send(product)  
+    try {
+        const product = await Product.destroy({
+            where: {
+                id: request.params.id
+            }
+        })
+        resply.send(`Product with id ${product} was deleted successfully`)  
+        
+    } catch (error) {
+        resply.send(error)   
+    }
 }

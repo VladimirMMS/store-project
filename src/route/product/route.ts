@@ -2,6 +2,7 @@ import getAllProduct from './controllers/getProducts'
 import getAllProductById from './controllers/getProductById';
 import createProduct from './controllers/createProduct';
 import { updateProduct } from './controllers/updateProduct';
+import { deleteProducttById } from './controllers/deleteProduct';
 
 const option = {
   schema: {
@@ -26,7 +27,7 @@ function productRoute(fastify:any, opt:any, done:any) {
   fastify.get('/product/:id',getAllProductById);
   fastify.post('/product', option, createProduct);
   fastify.put('/product/:id', updateProduct);
-  fastify.delete('/product', option, getAllProduct);
+  fastify.delete('/product/:id', deleteProducttById);
   done();
   
 }
