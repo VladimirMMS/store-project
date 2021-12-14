@@ -9,7 +9,7 @@ async function getAllCustomer(request:any, reply:any) {
             return reply.send(customer)
         }
         else {
-            reply.send("There isn't any customer")
+            reply.code(200).send("There isn't any customer")
         } 
     } catch (error) {
         reply.send('An error occurred in the server', error)

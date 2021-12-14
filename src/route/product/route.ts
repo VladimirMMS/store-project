@@ -7,14 +7,14 @@ import { deleteProducttById } from './controllers/deleteProduct';
 const option = {
   schema: {
     querystring: {
-      name: { type: 'string' },
-      excitement: { type: 'integer' }
+      customer: { type: 'string' },
+      excitement: { type: 'string' }
     },
     response: {
       200: {
         type: 'object',
         properties: {
-          hello: { type: 'string' }
+          data: { type: 'object' }
         }
       }
     }
@@ -23,9 +23,9 @@ const option = {
 
 function productRoute(fastify:any, opt:any, done:any) {
 
-  fastify.get('/product', getAllProduct);
-  fastify.get('/product/:id',getAllProductById);
-  fastify.post('/product', option, createProduct);
+  fastify.get('/product', option.schema.response,getAllProduct);
+  fastify.get('/product/:id',option.schema.response,getAllProductById);
+  fastify.post('/product', option.schema.querystring.customer, createProduct);
   fastify.put('/product/:id', updateProduct);
   fastify.delete('/product/:id', deleteProducttById);
   done();

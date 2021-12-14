@@ -3,18 +3,19 @@ import getAllCustomerById from './controllers/getCustomerById';
 import createCustomer from './controllers/createCustomer';
 import { updateCustomer } from './controllers/updateCustomer';
 import { deleteCustomerById } from './controllers/deleteCustomer';
+import db from '../../../src/db/models/index'
 
 const option = {
   schema: {
     querystring: {
-      name: { type: 'string' },
-      excitement: { type: 'integer' }
+      customer: { type: 'string' },
+      excitement: { type: 'string' }
     },
     response: {
       200: {
         type: 'object',
         properties: {
-          hello: { type: 'string' }
+          data: { type: 'object' }
         }
       }
     }
@@ -23,9 +24,9 @@ const option = {
 
 function customerRoute(fastify:any, opt:any, done:any) {
 
-  fastify.get('/customer', getAllCustomer);
-  fastify.get('/customer/:id',getAllCustomerById);
-  fastify.post('/customer', option, createCustomer);
+  fastify.get('/customer', option.schema.response,getAllCustomer);
+  fastify.get('/customer/:id',option.schema.response,getAllCustomerById);
+  fastify.post('/customer', option.schema.querystring.customer,createCustomer);
   fastify.put('/customer/:id', updateCustomer);
   fastify.delete('/customer/:id', deleteCustomerById);
   done();
