@@ -12,11 +12,17 @@ export async function createCustomer(request:any, reply:any) {
             age
         });
         if(newCsutomer) {
-            reply.send('Customer created successfully')
+            reply
+            .code(200)
+            .header('Content-Type', 'application/json')
+            .send({customer:newCsutomer})
         }  
        
     } catch (error) {
-        reply.send("Something wrong happenned with the server")
+        reply
+        .code(200)
+        .header('Content-Type', 'application/json')
+        .send({customer:""})
     } 
 }
 
@@ -26,13 +32,23 @@ export async function getAllCustomer(request:any, reply:any) {
     try {
         const customer = await Customer.findAll()
         if(customer.length) {
-            return reply.send(customer)
+            reply
+            .code(200)
+            .header('Content-Type', 'application/json')
+            .send({customer:customer})
+            
         }
         else {
-            reply.code(200).send("There isn't any customer")
+            reply
+            .code(303)
+            .header('Content-Type', 'application/json')
+            .send({customer:customer})
         } 
     } catch (error) {
-        reply.send('An error occurred in the server', error)
+        reply
+            .code(501)
+            .header('Content-Type', 'application/json')
+            .send({message:'Something wrong happenned in the server'})
     }  
 }
 
@@ -45,14 +61,23 @@ export async function getAllCustomerById(request:any, reply:any) {
             where:parseInt(id)
         })
         if(customer) {
-            reply.send(customer)
+            reply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({customer:customer})
         }
         else {
-            reply.send("There isn't any customer with that id")
+            reply
+            .code(303)
+            .header('Content-Type','application/json')
+            .send({message:"There isn't any customer with that id"})
         }
         
     } catch (error) {
-        reply.send('An error occurred in the server', error)
+        reply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'Something wrong happenned in the server'})
     }  
 }
 export async function updateCustomer(request:any, resply:any) {
@@ -67,17 +92,27 @@ export async function updateCustomer(request:any, resply:any) {
         })
         if(customer.length > 0) {
             customer.forEach(async (each: any) => {
-                await each.update({
+                await customer.update({
                     name,
                     lastname,
                     age
                 })
             })
+            resply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({customer:customer})
         }
-        resply.send(customer)  
+        resply
+        .code(303)
+        .header('Content-Type','application/json')
+        .send({message:'There is not any customer with that id'}) 
         
     } catch (error) {
-        resply.send(error)
+        resply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'Something wrong happenned with the server'})
     }
    
 }
@@ -91,10 +126,16 @@ export async function deleteCustomerById(request:any, resply:any) {
                 id: request.params.id
             }
         })
-        resply.send(`Customer with id ${customer} was deleted successfully`)  
+        resply
+        .code(200)
+        .header('Content-Type','application/json')
+        .send({customer:customer})  
         
     } catch (error) {
-        resply.send(error)   
+        resply
+        .code(200)
+        .header('Content-Type','application/json')
+        .send({message:'Something wrong happenned with the server'})   
     }
 }
 
@@ -108,12 +149,18 @@ export async function createProduct(request:any, reply:any) {
             price,
         });
         if(newProduct) {
-            reply.send('Product created successfully')
+            reply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({product:newProduct})  
         }  
        
     } catch (error) {
-        reply.send("Something wrong happenned with the server")
-    } 
+        reply
+        .code(200)
+        .header('Content-Type','application/json')
+        .send({message:'Something wrong happenned with the server'})   
+    }
 }
 
 export async function getAllProduct(request:any, reply:any) {
@@ -121,13 +168,23 @@ export async function getAllProduct(request:any, reply:any) {
     try {
         const allProduct = await Product.findAll()
         if(allProduct.length) {
-            return reply.send(allProduct)
+            reply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({product:allProduct})  
+          
         }
         else {
-            reply.send("There isn't any product")
+            reply
+            .code(303)
+            .header('Content-Type','application/json')
+            .send({message:'There is not any product yet'}) 
         } 
     } catch (error) {
-        reply.send('An error occurred in the server', error)
+        reply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'An error occurred in the server'})
     }  
 }
 
@@ -140,14 +197,23 @@ export async function getAllProductById(request:any, reply:any) {
             where:parseInt(id)
         })
         if(allProduct) {
-            reply.send(allProduct)
+            reply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({product:allProduct}) 
         }
         else {
-            reply.send("There isn't any product with that id")
+            reply
+            .code(303)
+            .header('Content-Type','application/json')
+            .send({message:"There isn't any product with that id"})
         }
         
     } catch (error) {
-        reply.send('An error occurred in the server', error)
+        reply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'An error occurred in the server'})
     }  
 }
 
@@ -168,11 +234,22 @@ export async function updateProduct(request:any, resply:any) {
                     price
                 })
             })
+            resply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({product:products})
         }
-        resply.send(products)  
+        resply
+        .code(303)
+        .header('Content-Type','application/json')
+        .send({message:'There is not any product with that id'})
+        
         
     } catch (error) {
-        resply.send(error)
+        resply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'An error occurred in the server'})
     }
    
 }
@@ -186,13 +263,19 @@ export async function deleteProducttById(request:any, resply:any) {
                 id: request.params.id
             }
         })
-        resply.send(`Product with id ${product} was deleted successfully`)  
+        resply
+            .code(200)
+            .header('Content-Type','application/json')
+            .send({product:product}) 
         
     } catch (error) {
-        resply.send(error)   
+        resply
+        .code(501)
+        .header('Content-Type','application/json')
+        .send({message:'An error occurred in the server'})    
     }
 }
-
+ 
 
 
 
