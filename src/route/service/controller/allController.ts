@@ -80,41 +80,31 @@ export async function getAllCustomerById(request:any, reply:any) {
         .send({message:'Something wrong happenned in the server'})
     }  
 }
-export async function updateCustomer(request:any, resply:any) {
+export async function updateCustomer(request:any, reply:any) {
     const {Customer} = db
     const {name, lastname, age} = request.body;
 
+    const values = {name, lastname, age}
+    
+
     try {
-        const customer = await Customer.findAll({
-            where: {
-                id: request.params.id
-            }
-        })
-        if(customer.length > 0) {
-            customer.forEach(async (each: any) => {
-                await customer.update({
-                    name,
-                    lastname,
-                    age
-                })
-            })
-            resply
+       const updateCustomer = await Customer.update(
+           values,
+           {where: {id:request.params.id}},
+       )
+       if(updateCustomer) {
+            reply
             .code(200)
             .header('Content-Type','application/json')
-            .send({customer:customer})
-        }
-        resply
-        .code(303)
-        .header('Content-Type','application/json')
-        .send({message:'There is not any customer with that id'}) 
+            .send({customer:updateCustomer})
+    } 
         
     } catch (error) {
-        resply
+        reply
         .code(501)
         .header('Content-Type','application/json')
         .send({message:'Something wrong happenned with the server'})
-    }
-   
+    } 
 }
 
 export async function deleteCustomerById(request:any, resply:any) {
@@ -217,41 +207,29 @@ export async function getAllProductById(request:any, reply:any) {
     }  
 }
 
-export async function updateProduct(request:any, resply:any) {
+export async function updateProduct(request:any, reply:any) {
     const {Product} = db
     const {name, price} = request.body;
+    const values = {name, price}
 
     try {
-        const products = await Product.findAll({
-            where: {
-                id: request.params.id
-            }
-        })
-        if(products.length > 0) {
-            products.forEach(async (product: any) => {
-                await product.update({
-                    name,
-                    price
-                })
-            })
-            resply
-            .code(200)
+        const updateCustomer = await Product.update(
+            values,
+            {where: {id:request.params.id}},
+        )
+        if(updateCustomer) {
+                reply
+                .code(200)
+                .header('Content-Type','application/json')
+                .send({customer:updateCustomer})
+        } 
+            
+        } catch (error) {
+            reply
+            .code(501)
             .header('Content-Type','application/json')
-            .send({product:products})
-        }
-        resply
-        .code(303)
-        .header('Content-Type','application/json')
-        .send({message:'There is not any product with that id'})
-        
-        
-    } catch (error) {
-        resply
-        .code(501)
-        .header('Content-Type','application/json')
-        .send({message:'An error occurred in the server'})
-    }
-   
+            .send({message:'Something wrong happenned with the server'})
+        } 
 }
 
 export async function deleteProducttById(request:any, resply:any) {
@@ -276,8 +254,3 @@ export async function deleteProducttById(request:any, resply:any) {
     }
 }
  
-
-
-
-
-
