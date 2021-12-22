@@ -29,7 +29,7 @@ const option = {
 	},
 };
   
-function customerRoute(fastify:any, opt:any, done:any) {
+function serviceRoute(fastify:any, opt:any, done:any) {
 	fastify.get('/customer', option.schema.response,getAllCustomer);
 	fastify.get('/customer/:id',option.schema.response,getAllCustomerById);
 	fastify.post('/customer', option.schema.querystring.customer,createCustomer);
@@ -44,5 +44,5 @@ function customerRoute(fastify:any, opt:any, done:any) {
     
 }
   
-export default customerRoute;
+export default serviceRoute;
   

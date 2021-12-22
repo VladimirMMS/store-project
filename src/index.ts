@@ -1,5 +1,5 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import fastify from 'fastify';
+import fastify, {FastifyPluginAsync} from 'fastify';
 import dotenv from 'dotenv';
 import serviceRoute from './route/service/route';
 import db from './db/models';
@@ -8,16 +8,12 @@ const server = fastify();
 dotenv.config();
 server.register(serviceRoute);
 
-interface IQuerystring {
-    string: string
-}
 
-server.get<{
-    Querystring: IQuerystring}>('/', async (request, reply) => {
-        
-    	return 'home';
-
-    });
+const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
+	fastify.get('/', async function (request, reply) {
+	  return { root: true };
+	});
+};
 
 server.listen(5000, (err, address) => {
 	db.sequelize.sync({force:true}).then(() => {
