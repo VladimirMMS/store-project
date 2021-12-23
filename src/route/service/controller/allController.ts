@@ -7,7 +7,6 @@ import db from '../../../db/models/index';
 
 export async function createCustomer(request: any, reply:any) {
 	const {Customer} = db;
-	console.log(request);
 	const {name, lastname, age} = request.body;
 
 	try {
