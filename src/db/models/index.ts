@@ -24,6 +24,7 @@ fs
 	})
 	.forEach(async (file: any) => {
 		// const model2 = await import(path.join(__dirname, file))(sequelize, Sequelize);
+		// eslint-disable-next-line @typescript-eslint/no-var-requires
 		const model = require(path.join(__dirname, file))(sequelize, Sequelize);
 		db[model.name] = model;
 	});
