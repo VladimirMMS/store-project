@@ -5,9 +5,9 @@ dotenv.config();
 
 export = {
 	development: {
-		username: process.env.POSTGRES_USER,
+		username: 'postgres',
 		password: process.env.POSTGRES_PASSWORD,
-		database: process.env.POSTGRES_DB,
+		database: 'store',
 		host: process.env.DB_HOST,
 		dialect: 'postgres'
 	},

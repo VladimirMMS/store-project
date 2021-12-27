@@ -13,7 +13,7 @@ const db:any = {};
 let sequelize: any;
 
 // eslint-disable-next-line prefer-const
-sequelize = new Sequelize('store', 'postgres', config.development.password, {
+sequelize = new Sequelize(config.development.database, config.development.username, config.development.password, {
 	dialect: 'postgres'
 });
 
@@ -22,10 +22,9 @@ fs
 	.filter((file: string) => {
 		return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.ts');
 	})
-	.forEach(async (file: any) => {
-		// const model2 = await import(path.join(__dirname, file))(sequelize, Sequelize);
-		// eslint-disable-next-line @typescript-eslint/no-var-requires
-		const model = require(path.join(__dirname, file))(sequelize, Sequelize);
+	.forEach(async (file:any) => {
+		const {default: models} = await import(path.join(__dirname, file)); 
+		const model = models(sequelize, Sequelize);
 		db[model.name] = model;
 	});
 
