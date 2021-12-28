@@ -26,7 +26,7 @@ function getModels() {
 		.filter((file: string) => {
 			return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.ts');
 		})
-		.forEach(async (file:any) => {
+		.map(async (file:any) => {
 			const {default: models} = await import(path.join(__dirname, file)); 
 			const model = models(sequelize, Sequelize);
 			db[model.name] = model;
