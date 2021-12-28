@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import db from '../../../db/models/index';
+import getModels from '../../../db/models/index';
 
 
 export async function createProduct(request:any, reply:any) {
+	const db = await getModels();
 	const {Product} = db;
 	const {name, price} = request.body;
 
@@ -28,6 +29,7 @@ export async function createProduct(request:any, reply:any) {
 
 
 export async function getAllProduct(request:any, reply:any) {
+	const db = await getModels();
 	const {Product} = db;
 	try {
 		const allProduct = await Product.findAll();
@@ -53,6 +55,7 @@ export async function getAllProduct(request:any, reply:any) {
 }
 
 export async function getAllProductById(request:any, reply:any) {
+	const db = await getModels();
 	const {Product} = db;
 	const {id} = request.params;
 
@@ -82,20 +85,21 @@ export async function getAllProductById(request:any, reply:any) {
 }
 
 export async function updateProduct(request:any, reply:any) {
+	const db = await getModels();
 	const {Product} = db;
 	const {name, price} = request.body;
 	const values = {name, price};
 
 	try {
-		const updateCustomer = await Product.update(
+		const updateProduct = await Product.update(
 			values,
 			{where: {id:request.params.id}},
 		);
-		if(updateCustomer) {
+		if(updateProduct) {
 			reply
 				.code(200)
 				.header('Content-Type','application/json')
-				.send({customer:updateCustomer});
+				.send({product:updateProduct});
 		} 
             
 	} catch (error) {
@@ -108,6 +112,7 @@ export async function updateProduct(request:any, reply:any) {
 
 export async function deleteProducttById(request:any, resply:any) {
     
+	const db = await getModels();
 	const {Product} = db;
 	try {
 		const product = await Product.destroy({

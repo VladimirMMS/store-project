@@ -1,9 +1,9 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import fastify, {FastifyPluginAsync} from 'fastify';
 import dotenv from 'dotenv';
-import customerRoute from './route/product/route';
+import customerRoute from './route/customer/route';
 import productRoute from './route/product/route';
-import db from './db/models';
+import getModels from './db/models';
 
 
 const server = fastify();
@@ -18,7 +18,8 @@ const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
 	});
 };
 
-server.listen(5000, (err, address) => {
+server.listen(5000, async(err, address) => {
+	const db = getModels();
 	db.sequelize.sync({force:true}).then(() => {
 		return '';
 	});

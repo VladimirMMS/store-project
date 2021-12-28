@@ -30,6 +30,7 @@ function customerRoute(fastify:any, opt:any, done:any) {
 	fastify.post('/customer', option.schema.querystring.customer,createCustomer);
 	fastify.put('/customer/:id', updateCustomer);
 	fastify.delete('/customer/:id', deleteCustomerById);
+	done();
     
 }
   

@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import db from '../../../db/models/index';
+import getModels from '../../../db/models/index';
 
 
 
 export async function createCustomer(request: any, reply:any) {
+	const db = await getModels();
 	const {Customer} = db;
 	const {name, lastname, age} = request.body;
 
@@ -30,6 +31,7 @@ export async function createCustomer(request: any, reply:any) {
 
 
 export async function getAllCustomer(request:any, reply:any) {
+	const db = await getModels();
 	const {Customer} = db;
 	try {
 		const customer = await Customer.findAll();
@@ -55,6 +57,7 @@ export async function getAllCustomer(request:any, reply:any) {
 }
 
 export async function getAllCustomerById(request:any, reply:any) {
+	const db = await getModels();
 	const {Customer} = db;
 	const {id} = request.params;
 
@@ -83,6 +86,7 @@ export async function getAllCustomerById(request:any, reply:any) {
 	}  
 }
 export async function updateCustomer(request:any, reply:any) {
+	const db = await getModels();
 	const {Customer} = db;
 	const {name, lastname, age} = request.body;
 
@@ -111,6 +115,7 @@ export async function updateCustomer(request:any, reply:any) {
 
 export async function deleteCustomerById(request:any, resply:any) {
     
+	const db = await getModels();
 	const {Customer} = db;
 	try {
 		const customer = await Customer.destroy({
