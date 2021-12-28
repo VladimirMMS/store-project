@@ -1,47 +1,47 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+'use strict';
 
-const {
-  Model
-} = require('sequelize');
+import { Model } from 'sequelize';
 
 
 interface ProductAttribute {
   id:number,
   name:string,
   price:number,
-  customer_id:string
+
   
 }
 
 export = (sequelize:any, DataTypes:any) => {
-  class Product extends Model<ProductAttribute>{
-    id!:number;
-    name!:string;
-    price!:number;
-    customer_id!:string;
+	class Product extends Model<ProductAttribute>{
+		id!:number;
+		name!:string;
+		price!:number;
 
-    static associate(models:any) {
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
+		static associate(models:any) {
       
-    }
-  };
-  
-    Product.init({
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull:false,
-      primaryKey:true
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull:false
-    },
-    price: {
-      type: DataTypes.INTEGER,
-      allowNull:false
-    },
-  }, {
-    sequelize,
-    modelName: 'Product',
-  });
-  return Product;
+		}
+	}
+	Product.init({
+		id: {
+			type: DataTypes.INTEGER,
+			autoIncrement: true,
+			allowNull:false,
+			primaryKey:true
+		},
+		name: {
+			type: DataTypes.STRING,
+			allowNull:false
+		},
+		price: {
+			type: DataTypes.INTEGER,
+			allowNull:false
+		},
+	}, {
+		sequelize,
+		modelName: 'Product',
+	});
+	return Product;
 };

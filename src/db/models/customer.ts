@@ -2,10 +2,7 @@
 'use strict';
 
 import { UUIDV4 } from 'sequelize/dist';
-
 import { Model } from 'sequelize';
-
-
 
 interface CustomerAttribute {
   id:string,
@@ -13,7 +10,6 @@ interface CustomerAttribute {
   lastname:string,
   age:number
 }
-
 
 export = (sequelize:any, DataTypes:any) => {
 	class Customer extends Model<CustomerAttribute>{
@@ -27,7 +23,6 @@ export = (sequelize:any, DataTypes:any) => {
 
 		}
 	}
-  
 	Customer.init({
 		id: {
 			type: DataTypes.UUID,
