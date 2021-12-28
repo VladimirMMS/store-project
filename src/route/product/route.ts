@@ -1,15 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {getAllCustomer, 
-	getAllCustomerById, 
-	createCustomer, 
-	updateCustomer, 
-	deleteCustomerById, 
+import { 
 	getAllProduct, 
 	getAllProductById, 
 	createProduct, 
 	updateProduct, 
 	deleteProducttById} 
-	from './controller/allController';
+	from './controller/productController';
 
 
 const option = {
@@ -29,12 +25,7 @@ const option = {
 	},
 };
   
-function serviceRoute(fastify:any, opt:any, done:any) {
-	fastify.get('/customer', option.schema.response,getAllCustomer);
-	fastify.get('/customer/:id',option.schema.response,getAllCustomerById);
-	fastify.post('/customer', option.schema.querystring.customer,createCustomer);
-	fastify.put('/customer/:id', updateCustomer);
-	fastify.delete('/customer/:id', deleteCustomerById);
+function productRoute(fastify:any, opt:any, done:any) {
 	fastify.get('/product', option.schema.response,getAllProduct);
 	fastify.get('/product/:id',option.schema.response,getAllProductById);
 	fastify.post('/product', option.schema.querystring.customer, createProduct);
@@ -44,5 +35,5 @@ function serviceRoute(fastify:any, opt:any, done:any) {
     
 }
   
-export default serviceRoute;
+export default productRoute;
   

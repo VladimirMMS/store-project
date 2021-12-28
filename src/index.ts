@@ -1,12 +1,15 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import fastify, {FastifyPluginAsync} from 'fastify';
 import dotenv from 'dotenv';
-import serviceRoute from './route/service/route';
+import customerRoute from './route/product/route';
+import productRoute from './route/product/route';
 import db from './db/models';
+
 
 const server = fastify();
 dotenv.config();
-server.register(serviceRoute);
+server.register(customerRoute);
+server.register(productRoute);
 
 
 const root: FastifyPluginAsync = async (fastify, opts): Promise<void> => {

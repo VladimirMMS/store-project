@@ -48,11 +48,3 @@ export = (sequelize:any, DataTypes:any) => {
 	});
 	return Customer;
 };
-
-
-
-
-
-
-
-
