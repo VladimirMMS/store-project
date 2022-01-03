@@ -14,7 +14,6 @@ let sequelize: any;
 
 // eslint-disable-next-line prefer-const
 
-
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 function getModels() {
 
@@ -31,7 +30,7 @@ function getModels() {
 			const model = models(sequelize, Sequelize);
 			db[model.name] = model;
 		});
-
+	
 	Object.keys(db).forEach(modelName => {
 		if (db[modelName].associate) {
 			db[modelName].associate(db);
@@ -43,6 +42,5 @@ function getModels() {
 	return db;
 	
 }
-
 
 export default getModels;
