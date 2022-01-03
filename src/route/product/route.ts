@@ -5,7 +5,7 @@ import {
 	createProduct, 
 	updateProduct, 
 	deleteProducttById} 
-	from './controller/productController';
+	from './controller';
 
 
 const option = {

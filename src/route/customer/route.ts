@@ -4,7 +4,7 @@ import {getAllCustomer,
 	createCustomer, 
 	updateCustomer, 
 	deleteCustomerById} 
-	from './controller/customerController';
+	from './controller';
 
 
 const option = {
