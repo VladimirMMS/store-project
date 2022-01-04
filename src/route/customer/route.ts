@@ -1,3 +1,4 @@
+import { FastifyInstance } from 'fastify';
 import {
   getAllCustomer,
   getAllCustomerById,
@@ -23,13 +24,11 @@ const option = {
   }
 };
 
-function customerRoute(fastify: any, opt: any, done: any) {
-  fastify.get('/customer', option.schema.response, getAllCustomer);
-  fastify.get('/customer/:id', option.schema.response, getAllCustomerById);
-  fastify.post('/customer', option.schema.querystring.customer, createCustomer);
+export default (fastify: FastifyInstance, opt: any, done: any) => {
+  fastify.get('/customer', option, getAllCustomer);
+  fastify.get('/customer/:id', option, getAllCustomerById);
+  fastify.post('/customer', option, createCustomer);
   fastify.put('/customer/:id', updateCustomer);
   fastify.delete('/customer/:id', deleteCustomerById);
   done();
-}
-
-export default customerRoute;
+};

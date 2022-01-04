@@ -1,19 +1,15 @@
-import fastify, { FastifyPluginAsync } from 'fastify';
+import fastify from 'fastify';
 import dotenv from 'dotenv';
-import customerRoute from './route/customer/route';
-import productRoute from './route/product/route';
+import serviceRoute from './route/index';
 import getModels from './db/models';
 
 const server = fastify();
 dotenv.config();
-server.register(customerRoute);
-server.register(productRoute);
+server.register(serviceRoute);
 
-const root: FastifyPluginAsync = async (fastify): Promise<void> => {
-  fastify.get('/', async function () {
-    return { root: true };
-  });
-};
+server.get('/', async function () {
+  return { root: true };
+});
 
 server.listen(5000, async (err, address) => {
   const db = getModels();

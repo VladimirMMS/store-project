@@ -5,6 +5,7 @@ import {
   updateProduct,
   deleteProducttById
 } from './controller';
+import { FastifyInstance } from 'fastify';
 
 const option = {
   schema: {
@@ -23,13 +24,11 @@ const option = {
   }
 };
 
-function productRoute(fastify: any, opt: any, done: any) {
-  fastify.get('/product', option.schema.response, getAllProduct);
-  fastify.get('/product/:id', option.schema.response, getAllProductById);
-  fastify.post('/product', option.schema.querystring.customer, createProduct);
+export default (fastify: FastifyInstance, opt: any, done: any) => {
+  fastify.get('/product', option, getAllProduct);
+  fastify.get('/product/:id', option, getAllProductById);
+  fastify.post('/product', option, createProduct);
   fastify.put('/product/:id', updateProduct);
   fastify.delete('/product/:id', deleteProducttById);
   done();
-}
-
-export default productRoute;
+};
