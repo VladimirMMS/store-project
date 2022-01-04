@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-
 'use strict';
 import dotenv from 'dotenv';
 import fs from 'fs';
@@ -11,7 +9,6 @@ import config from '../config/config';
 dotenv.config();
 const db: any = {};
 let sequelize: any;
-
 
 function getModels() {
   sequelize = new Sequelize(
