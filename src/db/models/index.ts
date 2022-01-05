@@ -1,10 +1,8 @@
 'use strict';
 import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
 import { Sequelize } from 'sequelize';
-const basename = path.basename(__filename);
 import config from '../config/config';
+import glob from 'fast-glob';
 
 dotenv.config();
 const db: any = {};
@@ -19,12 +17,14 @@ function getModels() {
       dialect: 'postgres'
     }
   );
-  fs.readdirSync(__dirname)
-    .filter((file: string) => {
-      return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.ts';
+
+  glob
+    .sync(['**src/db/models/*.ts', '!**src/db/models/index.ts'], {
+      onlyFiles: true,
+      absolute: true
     })
     .map(async (file: any) => {
-      const { default: models } = await import(path.join(__dirname, file));
+      const { default: models } = await import(file);
       const model = models(sequelize, Sequelize);
       db[model.name] = model;
     });
