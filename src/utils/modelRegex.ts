@@ -11,7 +11,7 @@ async function getEachModel(url: string) {
   models.map(async (promise) => {
     if (await promise) {
       // eslint-disable-next-line @typescript-eslint/no-shadow
-      promise.then(async function (promise: any) {
+      promise.then((promise: any) => {
         if (promise) {
           return promise;
         }
