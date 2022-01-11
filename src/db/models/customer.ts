@@ -1,13 +1,7 @@
 'use strict';
 
 import { UUIDV4, Model } from 'sequelize/dist';
-
-interface CustomerAttribute {
-  id: string;
-  name: string;
-  lastname: string;
-  age: number;
-}
+import { CustomerAttribute } from '../../interfaces/index';
 
 export = (sequelize: any, DataTypes: any) => {
   class Customer extends Model<CustomerAttribute> {
