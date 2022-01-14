@@ -12,7 +12,7 @@ server.get('/', async function () {
 });
 
 server.listen(5000, async (err, address) => {
-  const db = getModels();
+  const db = await getModels();
   db.sequelize.sync({ force: true }).then(() => {
     return '';
   });

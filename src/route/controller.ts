@@ -1,11 +1,11 @@
-export class ProductCrud {
+export class CreateCrud {
   model: any;
 
   constructor(model: any) {
     this.model = model;
   }
 
-  async createProduct(request: any): Promise<object> {
+  async createService(request: any): Promise<object> {
     try {
       const newProduct = await this.model.create(request.body);
       return newProduct;
@@ -14,7 +14,7 @@ export class ProductCrud {
     }
   }
 
-  async getAllProduct() {
+  async getAllService() {
     try {
       const product = await this.model.findAll();
       return product;
@@ -23,7 +23,7 @@ export class ProductCrud {
     }
   }
 
-  async getAllProductById(request: any) {
+  async getAllServiceById(request: any) {
     try {
       const product = await this.model.findOne({
         where: parseInt(request.params.id)
@@ -34,7 +34,7 @@ export class ProductCrud {
     }
   }
 
-  async updateProduct(request: any) {
+  async updateService(request: any) {
     try {
       const updatedProduct = await this.model.update(request.body, {
         where: { id: request.params.id }
@@ -46,7 +46,7 @@ export class ProductCrud {
     }
   }
 
-  async deleteProducttById(request: any) {
+  async deleteServiceById(request: any) {
     try {
       const product = await this.model.destroy({
         where: {
