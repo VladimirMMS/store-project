@@ -1,15 +1,13 @@
-import getModels from '../../db/models/index';
-import { ProductAttribute } from '../../interfaces';
+export class ProductCrud {
+  model: any;
 
-export default class ProductCrud {
-  constructor(private serviceModel: ProductAttribute) {}
+  constructor(model: any) {
+    this.model = model;
+  }
 
-  async createProduct(request: any) {
-    const db = await getModels();
-    const { Product } = db;
-
+  async createProduct(request: any): Promise<object> {
     try {
-      const newProduct = await Product.create(request.body);
+      const newProduct = await this.model.create(request.body);
       return newProduct;
     } catch (error: any) {
       return { error: error.message };
@@ -17,10 +15,8 @@ export default class ProductCrud {
   }
 
   async getAllProduct() {
-    const db = await getModels();
-    const { Product } = db;
     try {
-      const product = await Product.findAll();
+      const product = await this.model.findAll();
       return product;
     } catch (error: any) {
       return { error: error.message };
@@ -28,11 +24,8 @@ export default class ProductCrud {
   }
 
   async getAllProductById(request: any) {
-    const db = await getModels();
-    const { Product } = db;
-
     try {
-      const product = await Product.findOne({
+      const product = await this.model.findOne({
         where: parseInt(request.params.id)
       });
       return product;
@@ -42,11 +35,8 @@ export default class ProductCrud {
   }
 
   async updateProduct(request: any) {
-    const db = await getModels();
-    const { Product } = db;
-
     try {
-      const updatedProduct = await Product.update(request.body, {
+      const updatedProduct = await this.model.update(request.body, {
         where: { id: request.params.id }
       });
 
@@ -57,10 +47,8 @@ export default class ProductCrud {
   }
 
   async deleteProducttById(request: any) {
-    const db = await getModels();
-    const { Product } = db;
     try {
-      const product = await Product.destroy({
+      const product = await this.model.destroy({
         where: {
           id: request.params.id
         }
