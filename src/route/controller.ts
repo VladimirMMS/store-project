@@ -1,17 +1,13 @@
-export class CreateCrud {
+export class DefaultController {
   model: any;
 
   constructor(model: any) {
     this.model = model;
   }
 
-  async createService(request: any): Promise<object> {
-    try {
-      const newProduct = await this.model.create(request.body);
-      return newProduct;
-    } catch (error: any) {
-      throw new Error(error);
-    }
+  async createService(request: any) {
+    const newProduct = await this.model.create(request.body);
+    return newProduct;
   }
 
   async getAllService() {
