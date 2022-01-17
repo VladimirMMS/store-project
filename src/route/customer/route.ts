@@ -2,10 +2,9 @@ import { FastifyInstance } from 'fastify';
 import { CreateCrud } from '../controller';
 import getModels from '../../db/models';
 
-export default (fastify: FastifyInstance, opt: any, done: any) => {
-  const db = getModels();
-  const { Customer } = db;
-  console.log(Customer);
+export default async (fastify: FastifyInstance, opt: any, done: any) => {
+  const db = await getModels();
+  const { Customer } = await db;
   const customer = new CreateCrud(Customer);
   fastify.get('/customer', () => customer.getAllService());
   fastify.get('/customer/:id', (request) => customer.getAllServiceById(request));
