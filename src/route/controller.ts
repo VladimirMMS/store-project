@@ -10,7 +10,7 @@ export class CreateCrud {
       const newProduct = await this.model.create(request.body);
       return newProduct;
     } catch (error: any) {
-      return { error: error.message };
+      throw new Error(error);
     }
   }
 
@@ -19,7 +19,7 @@ export class CreateCrud {
       const product = await this.model.findAll();
       return product;
     } catch (error: any) {
-      return { error: error.message };
+      throw new Error(error);
     }
   }
 
@@ -30,7 +30,7 @@ export class CreateCrud {
       });
       return product;
     } catch (error: any) {
-      return { error: error.message };
+      throw new Error(error);
     }
   }
 
@@ -42,7 +42,7 @@ export class CreateCrud {
 
       return updatedProduct;
     } catch (error: any) {
-      return { error: error.message };
+      throw new Error(error);
     }
   }
 
@@ -55,7 +55,7 @@ export class CreateCrud {
       });
       return product;
     } catch (error: any) {
-      return { error: error.message };
+      throw new Error(error);
     }
   }
 }
