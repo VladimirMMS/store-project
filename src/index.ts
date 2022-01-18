@@ -2,11 +2,16 @@ import fastify from 'fastify';
 import dotenv from 'dotenv';
 import serviceRoute from './route/index';
 import getModels from './db/models';
+import { HandlerError } from './utils/handlerError';
 
 const server = fastify();
 dotenv.config();
-server.register(serviceRoute);
-
+server.register(serviceRoute).after(() => {
+  server.setErrorHandler((error) => {
+    const typeError = new HandlerError();
+    typeError.captureHandlerError(error);
+  });
+});
 server.get('/', async function () {
   return { root: true };
 });
