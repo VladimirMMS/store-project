@@ -1,11 +1,8 @@
 import { FastifyInstance } from 'fastify';
-import getModels from '../../db/models';
 import { ProductController } from './controller';
 
 export default async (fastify: FastifyInstance, opt: any, done: any) => {
-  const db = await getModels();
-  const { Product } = await db;
-  const product = new ProductController(Product);
+  const product = new ProductController(opt.model);
   fastify.get('/product', () => product.getAllService());
   fastify.get('/product/:id', (request) => product.getAllServiceById(request));
   fastify.get('/product/category/:category', (request) => product.getProductByCategory(request));
