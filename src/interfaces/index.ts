@@ -10,3 +10,8 @@ export interface ProductAttribute {
   name: string;
   price: number;
 }
+
+export interface OptionAttribute {
+  prefix: string;
+  model: any;
+}
