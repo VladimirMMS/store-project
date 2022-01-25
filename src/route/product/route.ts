@@ -1,7 +1,8 @@
 import { FastifyInstance } from 'fastify';
 import { ProductController } from './controller';
+import { OptionAttribute } from '../../interfaces';
 
-export default async (fastify: FastifyInstance, opt: any, done: any) => {
+export default async (fastify: FastifyInstance, opt: OptionAttribute, done: any) => {
   const product = new ProductController(opt.model);
   fastify.get('/product', () => product.getAllService());
   fastify.get('/product/:id', (request) => product.getAllServiceById(request));
