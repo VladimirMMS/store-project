@@ -1,12 +1,10 @@
 import { FastifyInstance } from 'fastify';
-import { DefaultController } from '../controller';
 
 export default async (fastify: FastifyInstance, opt: any, done: any) => {
-  const customer = new DefaultController(opt.model);
-  fastify.get('/customer', () => customer.getAllService());
-  fastify.get('/customer/:id', (request) => customer.getAllServiceById(request));
-  fastify.post('/customer', (request) => customer.createService(request));
-  fastify.put('/customer/:id', (request) => customer.updateService(request));
-  fastify.delete('/customer/:id', (request) => customer.deleteServiceById(request));
+  fastify.get('/', () => opt.controller.getAllService());
+  fastify.get('//:id', (request) => opt.controller.getAllServiceById(request));
+  fastify.post('/', (request) => opt.controller.createService(request));
+  fastify.put('//:id', (request) => opt.controller.updateService(request));
+  fastify.delete('//:id', (request) => opt.controller.deleteServiceById(request));
   done();
 };

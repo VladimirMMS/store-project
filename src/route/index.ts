@@ -2,22 +2,20 @@ import { FastifyInstance } from 'fastify';
 import productRoute from './product/route';
 import customerRoute from './customer/route';
 import getModels from '../db/models';
-import { OptionAttribute } from '../interfaces';
+import { DefaultController } from './controller';
+import { ProductController } from './product/controller';
 
 export default async (fastify: FastifyInstance, opt: any, done: any) => {
   const db = await getModels();
   const { Product, Customer } = await db;
-  let option: OptionAttribute = {
-    prefix: '/store',
-    model: Product
-  };
 
   fastify.register(productRoute, {
-    ...option
+    prefix: '/store/product',
+    controller: new ProductController(Product)
   });
   fastify.register(customerRoute, {
-    prefix: '/store',
-    model: Customer
+    prefix: '/store/customer',
+    controller: new DefaultController(Customer)
   });
   done();
 };

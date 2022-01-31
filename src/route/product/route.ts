@@ -1,14 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { ProductController } from './controller';
-import { OptionAttribute } from '../../interfaces';
 
-export default async (fastify: FastifyInstance, opt: OptionAttribute, done: any) => {
-  const product = new ProductController(opt.model);
-  fastify.get('/product', () => product.getAllService());
-  fastify.get('/product/:id', (request) => product.getAllServiceById(request));
-  fastify.get('/product/category/:category', (request) => product.getProductByCategory(request));
-  fastify.post('/product', (request) => product.createService(request));
-  fastify.put('/product/:id', (request) => product.updateService(request));
-  fastify.delete('/product/:id', (request) => product.deleteServiceById(request));
+export default async (fastify: FastifyInstance, opt: any, done: any) => {
+  fastify.get('/', () => opt.controller.getAllService());
+  fastify.get('/:id', (request) => opt.controller.getAllServiceById(request));
+  fastify.get('/category/:category', (request) => opt.controller.getProductByCategory(request));
+  fastify.post('/', (request) => opt.controller.createService(request));
+  fastify.put('//:id', (request) => opt.controller.updateService(request));
+  fastify.delete('//:id', (request) => opt.controller.deleteServiceById(request));
   done();
 };
