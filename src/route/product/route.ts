@@ -1,11 +1,12 @@
-import { FastifyInstance } from 'fastify';
+import { DefaultRoute } from '../route';
 
-export default async (fastify: FastifyInstance, opt: any, done: any) => {
-  fastify.get('/', () => opt.controller.getAllService());
-  fastify.get('/:id', (request) => opt.controller.getAllServiceById(request));
-  fastify.get('/category/:category', (request) => opt.controller.getProductByCategory(request));
-  fastify.post('/', (request) => opt.controller.createService(request));
-  fastify.put('//:id', (request) => opt.controller.updateService(request));
-  fastify.delete('//:id', (request) => opt.controller.deleteServiceById(request));
-  done();
-};
+export class ProductRoute extends DefaultRoute {
+  static createRoute: any;
+
+  productRoute(fastify: any, option: any, done: any) {
+    fastify.get('/category/:category', (request: any) =>
+      option.controller.getProductByCategory(request)
+    );
+    done();
+  }
+}
