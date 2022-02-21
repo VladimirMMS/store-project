@@ -8,7 +8,7 @@ import { ProductRoute } from './product/route';
 export default async (fastify: FastifyInstance, opt: any, done: any) => {
   const db = await getModels();
   const { Product, Customer } = await db;
-  fastify.register(ProductRoute.productRoute, {
+  fastify.register(ProductRoute.createRoute, {
     prefix: '/store/product',
     controller: new ProductController(Product)
   });
