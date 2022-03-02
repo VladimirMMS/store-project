@@ -4,7 +4,7 @@ import path from 'path';
 import { getController } from '../utils/getController';
 import fs from 'fs';
 
-export default async (fastify: FastifyInstance, opt: any, done: any) => {
+export default async (fastify: FastifyInstance) => {
   glob
     .sync([`**src/route/**/**`, '!**src/*', '!**src/route/**/**.ts'], {
       onlyFiles: false,
@@ -19,11 +19,9 @@ export default async (fastify: FastifyInstance, opt: any, done: any) => {
         finalPath = finalPath.replace(modelName, 'route.ts');
       }
       const { default: route } = await import(path.resolve(finalPath));
-      console.log(route);
       fastify.register(route.createRoute, {
         prefix: `store/${modelName}`,
         controller: await getController(modelName, finalPath)
       });
-      done();
     });
 };
