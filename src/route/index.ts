@@ -1,20 +1,29 @@
 import { FastifyInstance } from 'fastify';
-import getModels from '../db/models';
-import { DefaultController } from './controller';
-import { ProductController } from './product/controller';
-import ProductRoute from './product/route';
-import { verifyRoute } from '../utils/verifyRoute';
+import glob from 'fast-glob';
+import path from 'path';
+import { getController } from '../utils/getController';
+import fs from 'fs';
 
 export default async (fastify: FastifyInstance, opt: any, done: any) => {
-  const db = await getModels();
-  const { Product, Customer } = await db;
-  fastify.register(ProductRoute.createRoute, {
-    prefix: '/store/product',
-    controller: new ProductController(Product)
-  });
-  fastify.register(verifyRoute, {
-    prefix: '/store/customer',
-    controller: new DefaultController(Customer)
-  });
-  done();
+  glob
+    .sync([`**src/route/**/**`, '!**src/*', '!**src/route/**/**.ts'], {
+      onlyFiles: false,
+      absolute: false
+    })
+    .forEach(async (finalPath) => {
+      const modelName = finalPath.split('/')[2];
+      const directory = fs.existsSync(finalPath + '/route.ts');
+      if (directory) {
+        finalPath = finalPath + '/route.ts';
+      } else {
+        finalPath = finalPath.replace(modelName, 'route.ts');
+      }
+      const { default: route } = await import(path.resolve(finalPath));
+      console.log(route);
+      fastify.register(route.createRoute, {
+        prefix: `store/${modelName}`,
+        controller: await getController(modelName, finalPath)
+      });
+      done();
+    });
 };

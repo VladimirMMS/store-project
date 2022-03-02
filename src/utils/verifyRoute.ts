@@ -7,6 +7,7 @@ export async function verifyRoute(fastify: FastifyInstance, opt: any, done: any)
     onlyFiles: true,
     absolute: true
   });
+
   if (!customerDirectory.length) {
     customerDirectory = glob.sync(['**src/route/route.ts'], {
       onlyFiles: true,

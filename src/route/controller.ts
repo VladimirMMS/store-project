@@ -1,4 +1,4 @@
-export class DefaultController {
+export default class DefaultController {
   model: any;
 
   constructor(model: any) {

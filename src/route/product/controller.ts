@@ -1,6 +1,8 @@
-import { DefaultController } from '../controller';
+import DefaultController from '../controller';
 
-export class ProductController extends DefaultController {
+export default class ProductController extends DefaultController {
+  model: any;
+
   async getProductByCategory(request: any) {
     return this.model.findAll({
       where: { name: request.params.category }

@@ -14,7 +14,7 @@ server.get('/', async function () {
   return { root: true };
 });
 
-server.listen(5000, async (err, address) => {
+server.listen(5002, async (err, address) => {
   const db = await getModels();
   db.sequelize.sync({ force: true }).then(() => {
     return;
