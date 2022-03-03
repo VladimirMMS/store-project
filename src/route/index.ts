@@ -10,7 +10,7 @@ export default async (fastify: FastifyInstance) => {
       onlyFiles: false,
       absolute: false
     })
-    .forEach(async (finalPath) => {
+    .map(async (finalPath) => {
       const modelName = finalPath.split('/')[2];
       const directory = fs.existsSync(finalPath + '/route.ts');
       if (directory) {
