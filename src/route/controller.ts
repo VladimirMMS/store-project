@@ -5,8 +5,8 @@ export default class DefaultController {
     this.model = model;
   }
 
-  async createService(request: any) {
-    const newProduct = await this.model.create(request.body);
+  async createService(body: any) {
+    const newProduct = await this.model.create(body);
     return newProduct;
   }
 
