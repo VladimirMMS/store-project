@@ -5,38 +5,36 @@ export default class DefaultController {
     this.model = model;
   }
 
-  async createService(body: any) {
+  async createService(body: object): Promise<object> {
     const newProduct = await this.model.create(body);
     return newProduct;
   }
 
-  async getAllService() {
+  async getAllService(): Promise<object> {
     const product = await this.model.findAll();
     return product;
   }
 
-  async getAllServiceById(request: any) {
+  async getServiceById(id: string): Promise<object> {
     const product = await this.model.findOne({
-      where: parseInt(request.params.id)
+      where: parseInt(id)
     });
     return product;
   }
 
-  async updateService(request: any) {
+  async updateService(request: any): Promise<object> {
     const updatedProduct = await this.model.update(request.body, {
       where: { id: request.params.id }
     });
-
     return updatedProduct;
   }
 
-  async deleteServiceById(request: any) {
+  async deleteServiceById(id: string): Promise<object> {
     const product = await this.model.destroy({
       where: {
-        id: request.params.id
+        id: id
       }
     });
-
     return product;
   }
 }
