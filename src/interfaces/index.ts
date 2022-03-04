@@ -15,3 +15,8 @@ export interface OptionAttribute {
   prefix: string;
   model: any;
 }
+
+export interface BodyAttribute {
+  name: string;
+  price: number;
+}

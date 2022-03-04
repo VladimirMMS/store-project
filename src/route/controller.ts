@@ -1,3 +1,5 @@
+import { BodyAttribute } from '../interfaces';
+
 export default class DefaultController {
   model: any;
 
@@ -5,36 +7,31 @@ export default class DefaultController {
     this.model = model;
   }
 
-  async createService(body: object): Promise<object> {
-    const newProduct = await this.model.create(body);
-    return newProduct;
+  async createService(body: BodyAttribute): Promise<object> {
+    return this.model.create(body);
   }
 
   async getAllService(): Promise<object> {
-    const product = await this.model.findAll();
-    return product;
+    return this.model.findAll();
   }
 
-  async getServiceById(id: string): Promise<object> {
-    const product = await this.model.findOne({
-      where: parseInt(id)
+  async getServiceById(id: BodyAttribute): Promise<object> {
+    return this.model.findOne({
+      where: { id: id }
     });
-    return product;
   }
 
   async updateService(request: any): Promise<object> {
-    const updatedProduct = await this.model.update(request.body, {
+    return this.model.update(request.body, {
       where: { id: request.params.id }
     });
-    return updatedProduct;
   }
 
-  async deleteServiceById(id: string): Promise<object> {
-    const product = await this.model.destroy({
+  async deleteServiceById(id: BodyAttribute): Promise<object> {
+    return this.model.destroy({
       where: {
         id: id
       }
     });
-    return product;
   }
 }
