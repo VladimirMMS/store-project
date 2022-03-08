@@ -1,10 +1,15 @@
-import getModels from '../db/models';
 import path from 'path';
+import initDb, { getModel } from '../db/models';
 
-export async function getController(modelName: string, finalPath: string) {
-  const modelUpper = modelName.charAt(0).toUpperCase() + modelName.slice(1);
-  const db = await getModels();
-  finalPath = finalPath.replace('route.ts', 'controller.ts');
-  const { default: controller } = await import(path.resolve(finalPath));
-  return new controller(db.sequelize.models[modelUpper]);
+function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export async function getController(modelName: string) {
+  await initDb();
+  const model = await getModel(capitalize(modelName));
+  const { default: controller } = await import(
+    path.resolve(`src/route/${modelName}/controller.ts`)
+  );
+  return new controller(model);
 }
