@@ -8,7 +8,7 @@ dotenv.config();
 const db: any = {};
 let sequelize: any;
 
-function getModels() {
+function initDb() {
   sequelize = new Sequelize(
     config.development.database,
     config.development.username,
@@ -39,5 +39,14 @@ function getModels() {
   db.Sequelize = Sequelize;
   return db;
 }
+export async function getModels() {
+  await initDb();
+  return db.sequelize.models;
+}
 
-export default getModels;
+export async function getModel(modelName: string) {
+  await initDb();
+  return db.sequelize.models[modelName];
+}
+
+export default initDb;
