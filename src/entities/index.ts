@@ -8,16 +8,17 @@ export default async (fastify: FastifyInstance) => {
   const modelArray = await getModelDirectory();
   modelArray.map(async (model) => {
     const modelName = model;
-    let directory = '';
+    let defaultDirectory = 'src/entities/route.ts';
     if (fs.existsSync(`src/entities/${model}/route.ts`)) {
-      directory = 'src/entities/' + model;
-    } else {
-      directory = 'src/entities/route.ts';
+      defaultDirectory = `src/entities/${model}/route.ts`;
     }
-    const { default: route } = await import(path.resolve(directory));
+    const { default: route } = await import(path.resolve(defaultDirectory));
     fastify.register(route.createRoute, {
       prefix: `store/${modelName}`,
-      controller: await getController(modelName)
+      controller: await getController(
+        modelName,
+        defaultDirectory.replace('route.ts', 'controller.ts')
+      )
     });
   });
 };
