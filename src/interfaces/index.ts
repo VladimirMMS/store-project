@@ -20,3 +20,10 @@ export interface BodyAttribute {
   name: string;
   price: number;
 }
+
+export interface OrderAttribute {
+  id: string;
+  customerId: string;
+  productId: string;
+  address: string;
+}
