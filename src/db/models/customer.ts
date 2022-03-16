@@ -1,6 +1,5 @@
 'use strict';
-
-import { UUIDV4, Model } from 'sequelize/dist';
+import { UUIDV4, Model } from 'sequelize';
 import { CustomerAttribute } from '../../interfaces/index';
 
 export = (sequelize: any, DataTypes: any) => {
@@ -13,8 +12,13 @@ export = (sequelize: any, DataTypes: any) => {
 
     age!: number;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    static associate(models: any) {}
+    phone!: number;
+
+    static associate(models: any) {
+      models.Customer.hasMany(models.Order, {
+        foreignKey: 'orderId'
+      });
+    }
   }
   Customer.init(
     {
@@ -34,6 +38,10 @@ export = (sequelize: any, DataTypes: any) => {
       },
       age: {
         type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      phone: {
+        type: DataTypes.STRING(10),
         allowNull: false
       }
     },

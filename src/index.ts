@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import dotenv from 'dotenv';
 import serviceRoute from './entities/index';
-import initDb from './db/models';
+import initDb, { getAssocation } from './db/models';
 
 const server = fastify();
 dotenv.config();
@@ -16,6 +16,7 @@ server.get('/', async function () {
 
 server.listen(5002, async (err, address) => {
   const db = initDb();
+  getAssocation();
   db.sequelize.sync({ force: true }).then(() => {
     return;
   });

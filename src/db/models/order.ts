@@ -12,11 +12,11 @@ export = (sequelize: any, DataTypes: any) => {
     address!: string;
 
     static associate(models: any) {
-      Order.hasMany(models.Customer, {
+      models.Order.hasMany(models.Customer, {
         sourceKey: 'id',
         foreignKey: 'customerId'
       });
-      Order.hasMany(models.Product, {
+      models.Order.hasMany(models.Product, {
         sourceKey: 'id',
         foreignKey: 'productId'
       });

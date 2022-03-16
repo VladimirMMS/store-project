@@ -10,8 +10,12 @@ export = (sequelize: any, DataTypes: any) => {
 
     price!: number;
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    static associate(models: any) {}
+    static associate(models: any) {
+      models.Product.belongsToMany(models.Order, {
+        foreignKey: 'orderId',
+        through: 'OrderVsProduct'
+      });
+    }
   }
   Product.init(
     {
