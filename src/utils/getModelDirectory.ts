@@ -10,7 +10,6 @@ async function getModelDirectory() {
   Object.keys(models).forEach((model) => {
     modelArray.push(lowerCase(model));
   });
-  console.log(modelArray);
   return modelArray;
 }
 
