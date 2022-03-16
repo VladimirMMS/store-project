@@ -3,6 +3,7 @@ export interface CustomerAttribute {
   name: string;
   lastname: string;
   age: number;
+  phone: number;
 }
 
 export interface ProductAttribute {
