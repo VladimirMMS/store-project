@@ -2,7 +2,7 @@
 import { Model } from 'sequelize';
 import { ProductAttribute } from '../../interfaces/index';
 
-export = (sequelize: any, DataTypes: any) => {
+export default (sequelize: any, DataTypes: any) => {
   class Product extends Model<ProductAttribute> {
     id!: number;
 
@@ -11,8 +11,8 @@ export = (sequelize: any, DataTypes: any) => {
     price!: number;
 
     static associate(models: any) {
-      models.Product.belongsToMany(models.Order, {
-        foreignKey: 'orderId',
+      this.belongsToMany(models.Order, {
+        foreignKey: 'id',
         through: 'OrderVsProduct'
       });
     }
@@ -36,7 +36,8 @@ export = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: 'Product'
+      modelName: 'Product',
+      freezeTableName: true
     }
   );
   return Product;
