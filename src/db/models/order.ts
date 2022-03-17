@@ -1,9 +1,9 @@
 import { UUIDV4, Model } from 'sequelize/dist';
 import { OrderAttribute } from '../../interfaces/index';
 
-export = (sequelize: any, DataTypes: any) => {
+export default (sequelize: any, DataTypes: any) => {
   class Order extends Model<OrderAttribute> {
-    id!: string;
+    orderId!: string;
 
     customerId!: string;
 
@@ -12,19 +12,17 @@ export = (sequelize: any, DataTypes: any) => {
     address!: string;
 
     static associate(models: any) {
-      models.Order.hasMany(models.Customer, {
-        sourceKey: 'id',
-        foreignKey: 'customerId'
+      Order.hasMany(models.Product, {
+        foreignKey: 'id'
       });
-      models.Order.hasMany(models.Product, {
-        sourceKey: 'id',
-        foreignKey: 'productId'
+      Order.belongsTo(models.Customer, {
+        foreignKey: 'customerId'
       });
     }
   }
   Order.init(
     {
-      id: {
+      orderId: {
         type: DataTypes.UUID,
         defaultValue: UUIDV4,
         allowNull: false,
@@ -35,7 +33,8 @@ export = (sequelize: any, DataTypes: any) => {
         allowNull: false
       },
       customerId: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
         allowNull: false
       },
       address: {
@@ -45,7 +44,8 @@ export = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: 'Order'
+      modelName: 'Order',
+      freezeTableName: true
     }
   );
   return Order;
