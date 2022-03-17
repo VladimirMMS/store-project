@@ -2,7 +2,7 @@
 import { UUIDV4, Model } from 'sequelize';
 import { CustomerAttribute } from '../../interfaces/index';
 
-export = (sequelize: any, DataTypes: any) => {
+export default (sequelize: any, DataTypes: any) => {
   class Customer extends Model<CustomerAttribute> {
     id!: string;
 
@@ -15,8 +15,8 @@ export = (sequelize: any, DataTypes: any) => {
     phone!: number;
 
     static associate(models: any) {
-      models.Customer.hasMany(models.Order, {
-        foreignKey: 'orderId'
+      Customer.hasMany(models.Order, {
+        foreignKey: 'customerId'
       });
     }
   }
@@ -47,7 +47,8 @@ export = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
-      modelName: 'Customer'
+      modelName: 'Customer',
+      freezeTableName: true
     }
   );
   return Customer;
