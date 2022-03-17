@@ -23,7 +23,7 @@ export interface BodyAttribute {
 }
 
 export interface OrderAttribute {
-  id: string;
+  orderId: string;
   customerId: string;
   productId: string;
   address: string;

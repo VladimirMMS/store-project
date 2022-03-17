@@ -1,3 +1,5 @@
+import { getModels } from '../db/models';
+
 export default class DefaultController {
   model: any;
 
@@ -10,7 +12,8 @@ export default class DefaultController {
   }
 
   async getAllService(): Promise<object> {
-    return this.model.findAll();
+    const models = await getModels();
+    return this.model.findAll({ include: models.Order });
   }
 
   async getServiceById(id: any): Promise<object> {
