@@ -13,7 +13,7 @@ export default class DefaultController {
 
   async getAllService(): Promise<object> {
     const models = await getModels();
-    return this.model.findAll({ include: models.Order });
+    return this.model.findAll({ include: models.Customer });
   }
 
   async getServiceById(id: any): Promise<object> {

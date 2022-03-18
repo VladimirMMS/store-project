@@ -12,11 +12,11 @@ export default (sequelize: any, DataTypes: any) => {
     address!: string;
 
     static associate(models: any) {
-      Order.hasMany(models.Product, {
-        foreignKey: 'id'
-      });
       Order.belongsTo(models.Customer, {
         foreignKey: 'customerId'
+      });
+      Order.belongsTo(models.Product, {
+        foreignKey: 'productId'
       });
     }
   }
@@ -29,7 +29,8 @@ export default (sequelize: any, DataTypes: any) => {
         primaryKey: true
       },
       productId: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
         allowNull: false
       },
       customerId: {

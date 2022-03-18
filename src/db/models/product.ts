@@ -1,5 +1,5 @@
 'use strict';
-import { Model } from 'sequelize';
+import { Model, UUIDV4 } from 'sequelize';
 import { ProductAttribute } from '../../interfaces/index';
 
 export default (sequelize: any, DataTypes: any) => {
@@ -11,17 +11,16 @@ export default (sequelize: any, DataTypes: any) => {
     price!: number;
 
     static associate(models: any) {
-      this.belongsToMany(models.Order, {
-        foreignKey: 'id',
-        through: 'OrderVsProduct'
+      Product.hasMany(models.Order, {
+        foreignKey: 'productId'
       });
     }
   }
   Product.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
         allowNull: false,
         primaryKey: true
       },

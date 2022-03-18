@@ -12,6 +12,12 @@ export interface ProductAttribute {
   price: number;
 }
 
+export interface ProductOrderAttribute {
+  id: number;
+  orderId: string;
+  productId: string;
+}
+
 export interface OptionAttribute {
   prefix: string;
   model: any;
