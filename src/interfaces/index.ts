@@ -10,6 +10,7 @@ export interface ProductAttribute {
   id: number;
   name: string;
   price: number;
+  categoryId: number;
 }
 
 export interface ProductOrderAttribute {
@@ -33,4 +34,9 @@ export interface OrderAttribute {
   customerId: string;
   productId: string;
   address: string;
+}
+
+export interface CategoryAttribute {
+  id: number;
+  name: string;
 }

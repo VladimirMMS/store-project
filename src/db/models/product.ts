@@ -10,9 +10,14 @@ export default (sequelize: any, DataTypes: any) => {
 
     price!: number;
 
+    categoryId!: number;
+
     static associate(models: any) {
       Product.hasMany(models.Order, {
         foreignKey: 'productId'
+      });
+      Product.belongsTo(models.Category, {
+        foreignKey: 'categoryId'
       });
     }
   }
@@ -29,6 +34,10 @@ export default (sequelize: any, DataTypes: any) => {
         allowNull: false
       },
       price: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      categoryId: {
         type: DataTypes.INTEGER,
         allowNull: false
       }
