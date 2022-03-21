@@ -1,5 +1,3 @@
-import { getModels } from '../db/models';
-
 export default class DefaultController {
   model: any;
 
@@ -12,8 +10,7 @@ export default class DefaultController {
   }
 
   async getAllService(): Promise<object> {
-    const models = await getModels();
-    return this.model.findAll({ include: models.Customer });
+    return this.model.findAll();
   }
 
   async getServiceById(id: any): Promise<object> {
