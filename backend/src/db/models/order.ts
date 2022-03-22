@@ -1,4 +1,3 @@
-
 import { UUIDV4, Model } from 'sequelize/dist';
 import { OrderAttribute } from '../../interfaces/index';
 
