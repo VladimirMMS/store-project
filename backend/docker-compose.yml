@@ -1,0 +1,22 @@
+version: '3.1'
+services :
+  store-db:
+    image: postgres
+    container_name: store-db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/postgres/data:/var/lib/postgres/data
+    env_file: './.env'
+  adminer:
+    image: adminer
+    restart: always
+    depends_on: 
+      - store-db
+    ports:
+      - 5002:8081
+  
+  
+    
+
+  
