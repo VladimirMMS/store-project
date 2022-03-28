@@ -6,8 +6,9 @@ export = {
   development: {
     username: 'postgres',
     password: process.env.POSTGRES_PASSWORD,
-    database: 'store',
+    database: 'postgres',
     host: process.env.DB_HOST,
+    port: 5432,
     dialect: 'postgres'
   },
   test: {

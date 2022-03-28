@@ -14,6 +14,8 @@ async function initDb() {
     config.development.username,
     config.development.password,
     {
+      host: config.development.host,
+      port: config.development.port,
       dialect: 'postgres'
     }
   );

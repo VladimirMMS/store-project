@@ -30,6 +30,7 @@ export default (sequelize: any, DataTypes: any) => {
       },
       name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
       }
     },
