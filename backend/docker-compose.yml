@@ -3,8 +3,9 @@ services :
   store-db:
     image: postgres
     container_name: store-db
+    restart: always
     ports:
-      - 5432:5432
+      - 4321:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgres/data
     env_file: './.env'
