@@ -1,0 +1,16 @@
+{
+    "extends": [
+      "plugin:import/recommended",
+      "airbnb-typescript/base",
+      "prettier",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": ["@typescript-eslint"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": ["./tsconfig.json"]
+    },
+    "rules": {
+      "import/no-unresolved": 0
+    }
+  }
