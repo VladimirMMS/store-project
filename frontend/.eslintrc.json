@@ -8,7 +8,7 @@
     "plugins": ["@typescript-eslint"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-      "project": ["./tsconfig.json"]
+      "project": ["./frontend/tsconfig.json"]
     },
     "rules": {
         "no-use-before-define": "off",
