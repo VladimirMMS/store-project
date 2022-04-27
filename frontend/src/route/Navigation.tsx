@@ -1,5 +1,5 @@
 import { useStyle } from './style';
-import { Card, CardContent,MenuList } from '@mui/material';
+import { Card, CardContent, MenuList } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { routes } from './route';
 import React from "react";
