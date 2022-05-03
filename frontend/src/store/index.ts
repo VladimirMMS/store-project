@@ -1,5 +1,18 @@
-import { AnyAction, createStore, EmptyObject, Store } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
+import thunk from 'redux-thunk';
 import { reducer } from '../reducers';
 
-export const store: Store<EmptyObject, AnyAction> = createStore(reducer);
-store.subscribe(() => console.log(store));
+declare global {
+    interface Window {
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+  }
+
+const composeEnhancers =
+  (typeof window !== "undefined" &&
+    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+export const store = createStore(reducer,
+    composeEnhancers(applyMiddleware(thunk))
+    );
+

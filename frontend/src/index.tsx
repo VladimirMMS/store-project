@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// eslint-disable-next-line import/extensions
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ThemeProvider } from 'styled-components';
+import GlobalCSS from './globalStyle';
+import theme from './theme';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <GlobalCSS />
+      <App />
+    </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

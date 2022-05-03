@@ -1,3 +1,6 @@
-import { AnyAction, combineReducers, EmptyObject, Reducer } from 'redux';
+import { combineReducers } from 'redux';
+import { CustomerReducer } from './CustomerReducer';
 
-export const reducer: Reducer<EmptyObject, AnyAction> = combineReducers({});
+export const reducer = combineReducers({
+  crudReducer: CustomerReducer
+});

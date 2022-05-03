@@ -1,44 +1,59 @@
 import { Button } from "@mui/material";
-import React from "react";
 import DataTable from "../components/TableData/TableData";
-import useActionHook from '../hooks/actionTableHook'
+import { EndpointRequest } from '../utils/fetch';
+import React from "react";
+import * as action from '../actions/actions';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Row } from "../interfaces";
+
 
 export default function Customer() {
 
-  const {handleEdit, data} = useActionHook('/customer')
 
-    
+  const dispatch = useDispatch();
+  useEffect(() => {
+    new EndpointRequest()
+      .get('/customer')
+      .then((data) => data.json())
+      .then((res) => dispatch(action.getData(res)));
+  }, []);
 
-    const columns = [
-        {field: 'id', headerName: 'ID', width: 300, editable: false},
-        {field: 'name', headerName: 'Name', width: 250, editable: false},
-        {field: 'lastname', headerName: 'LastName', width: 250, editable: false},
-        {field: 'age', headerName: 'Age', width: 90, editable: false},
-        {field: 'phone', headerName: 'Phone', width: 250, editable: false},
-        {field: 'Actions', width: 200, renderCell: (rowValues:object) => {
+  const handleEdit = (event: any, { row }: Row) => {
+    console.log(row);
+  };
+
+
+
+  const columns = [
+    { field: 'id', headerName: 'ID', width: 300, editable: false },
+    { field: 'name', headerName: 'Name', width: 250, editable: false },
+    { field: 'lastname', headerName: 'LastName', width: 250, editable: false },
+    { field: 'age', headerName: 'Age', width: 90, editable: false },
+    { field: 'phone', headerName: 'Phone', width: 250, editable: false },
+    {
+      field: 'Actions', width: 200, renderCell: (rowValues: Row) => {
         return (
-            <>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={() => {
-                    handleEdit(rowValues)
-                 }}
-              >
-                Edit
-              </Button>
-            <Button variant="outlined" style={{marginLeft: '10px'}}>
-            Delete
-          </Button>
+          <>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleEdit(event, rowValues)}
+            >
+              Edit
+            </Button>
+            <Button variant="outlined" style={{ marginLeft: '10px' }}>
+              Delete
+            </Button>
           </>
         )
+      }
     }
-  }
-    ]
-  
-    return (
-      <div style={{ maxWidth: '100%' }}>
-        <DataTable data={data} columns={columns} title={'Customer'}/>
-      </div>
-    )
+  ]
+
+  return (
+    <div style={{ maxWidth: '100%' }}>
+      <DataTable columns={columns} title={'Customer'} />
+    </div>
+  )
 }

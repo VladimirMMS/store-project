@@ -34,8 +34,8 @@ export default function FormCreate({ setOpen }: any) {
         onSubmit: (formData: DataCustomer) => {
             setOpen(false);
             new EndpointRequest().post('/customer', formData)
-            .then((res) => res.json())
-            .then((data) => dispatch(action.createData(data)))
+                .then((res) => res.json())
+                .then((data) => dispatch(action.createData(data)))
         }
     });
 
