@@ -6,6 +6,7 @@ import initDb, { getAssocation } from './db/models';
 const server = fastify();
 dotenv.config();
 server.register(serviceRoute);
+server.register(import('fastify-cors'));
 
 server.setErrorHandler((error, request, reply) => {
   reply.send(error);
@@ -17,7 +18,7 @@ server.get('/', async function () {
 server.listen(5002, async (err, address) => {
   const db = await initDb();
   getAssocation();
-  db.sequelize.sync({ force: true }).then(() => {
+  db.sequelize.sync({ force: false }).then(() => {
     return;
   });
   if (err) {

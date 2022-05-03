@@ -18,6 +18,6 @@ export class EndpointRequest {
       },
       body: JSON.stringify(body)
     };
-    return fetch(`${EndpointRequest.apiStore}${url}`, bodyOpts)
+    return fetch(`${EndpointRequest.apiStore}${url}`, bodyOpts);
   }
 }

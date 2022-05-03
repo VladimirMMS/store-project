@@ -1,4 +1,4 @@
-import { GridColumns } from "@mui/x-data-grid";
+import { GridColumns } from '@mui/x-data-grid';
 
 type JSXComponent = () => JSX.Element;
 
@@ -16,13 +16,17 @@ export interface DataCustomer {
   phone: string;
 }
 
+export interface Row {
+  row: DataCustomer
+}
+
+
 export interface PropsTable {
-  data: DataCustomer[];
   columns: GridColumns<DataCustomer>;
   title: string;
 }
 
 export interface Data {
   data: DataCustomer[];
-  row: DataCustomer
+  row: DataCustomer;
 }

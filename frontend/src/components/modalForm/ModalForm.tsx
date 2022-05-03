@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-export default function ModalForm({open, handleClose, setOpen}: any) {
+export default function ModalForm({ open, handleClose, setOpen }: any) {
   return (
     <div>
       <Modal
@@ -27,7 +27,7 @@ export default function ModalForm({open, handleClose, setOpen}: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <FormCreate setOpen={setOpen}/>
+          <FormCreate setOpen={setOpen} />
         </Box>
       </Modal>
     </div>

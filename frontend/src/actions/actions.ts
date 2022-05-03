@@ -1,13 +1,20 @@
-export type CrudActions = | {type: 'GET', payload:{data: object}}
-| {type: 'POST', payload: {state:object}} 
-| {type: 'PUT', payload: {state:object}} 
-| {type: 'DEL', payload: {id: string}}
+import { DataCustomer } from "../interfaces";
 
-export const getData = (data:object): CrudActions => ({
-    type:'GET',
-    payload: { 
-        data 
-    }
-    
+export type CrudActions =
+  | { type: 'GET_CUSTOMER'; payload: { data: object } }
+  | { type: 'CREATE_CUSTOMER'; payload: object }
+  | { type: 'PUT'; payload: { state: object } }
+  | { type: 'DEL'; payload: { id: string } };
 
-})
+export const getData = (data: DataCustomer): CrudActions => ({
+  type: 'GET_CUSTOMER',
+  payload: {
+    data
+  }
+});
+
+export const createData = (data: object): CrudActions => ({
+  type: 'CREATE_CUSTOMER',
+  payload: data
+
+});
