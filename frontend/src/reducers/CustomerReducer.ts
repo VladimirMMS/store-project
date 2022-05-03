@@ -1,8 +1,7 @@
 import { CrudActions } from '../actions/actions';
+import { State } from '../interfaces';
 
-interface State {
-  data: Array<object>;
-}
+
 
 const initalState: State = {
   data: []

@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Typography } from '@mui/material';
-import { PropsTable } from '../../interfaces';
+import { Data, PropsTable } from '../../interfaces';
 import ModalForm from '../modalForm/ModalForm';
 import { useSelector } from 'react-redux';
 
 export default function DataTable({ columns, title }: PropsTable) {
   const { crudReducer }: any = useSelector((state) => state);
-  const { data } = crudReducer;
+  const { data }: Data = crudReducer;
 
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
