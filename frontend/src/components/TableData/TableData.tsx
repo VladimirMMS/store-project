@@ -6,8 +6,8 @@ import ModalForm from '../modalForm/ModalForm';
 import { useSelector } from 'react-redux';
 
 export default function DataTable({ columns, title }: PropsTable) {
-  const { crudReducer }: any = useSelector((state) => state);
-  const { data }: Data = crudReducer;
+  const { customerReducer }: any = useSelector((state) => state);
+  const { data }: Data = customerReducer;
 
   const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);

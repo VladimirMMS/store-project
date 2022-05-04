@@ -6,17 +6,13 @@ import * as action from '../actions/actions';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row } from "../interfaces";
-
+import { fetchData } from "../reducers/CustomerReducer";
 
 export default function Customer() {
-
-
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    new EndpointRequest()
-      .get('/customer')
-      .then((data) => data.json())
-      .then((res) => dispatch(action.getData(res)));
+    fetchData(dispatch)
   }, []);
 
   const handleEdit = (event: any, { row }: Row) => {
