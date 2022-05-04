@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import * as action from '../../actions/actions';
 import { DataCustomer } from '../../interfaces';
 import { EndpointRequest } from '../../utils/fetch';
+import { saveNewData } from '../../reducers/CustomerReducer';
 
 export default function FormCreate({ setOpen }: any) {
     const classes = useStyle();
@@ -33,9 +34,9 @@ export default function FormCreate({ setOpen }: any) {
         }),
         onSubmit: (formData: DataCustomer) => {
             setOpen(false);
-            new EndpointRequest().post('/customer', formData)
-                .then((res) => res.json())
-                .then((data) => dispatch(action.createData(data)))
+            saveNewData(dispatch, formData)
+
+           
         }
     });
 

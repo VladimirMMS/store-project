@@ -20,6 +20,10 @@ export interface Row {
   row: DataCustomer
 }
 
+export interface State {
+  data: Array<object>;
+}
+
 
 export interface PropsTable {
   columns: GridColumns<DataCustomer>;
@@ -28,5 +32,4 @@ export interface PropsTable {
 
 export interface Data {
   data: DataCustomer[];
-  row: DataCustomer;
 }
