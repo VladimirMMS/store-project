@@ -12,7 +12,7 @@ export function customerReducer(state = initalState, action: CrudActions) {
     case 'GET_CUSTOMERS':
       state = {
         ...state,
-        data: [action.payload]
+        data: [action.payload.data]
       };
       return {
         ...state,
@@ -24,6 +24,23 @@ export function customerReducer(state = initalState, action: CrudActions) {
       return {
         ...state,
         data: stateObject
+      };
+    case 'UPDATE_CUSTOMER':
+      const newArray = state.data.map((object) => {
+        if (object.id == action.payload.data.id) {
+          return {
+            ...object,
+            name: action.payload.data.name,
+            lastName: action.payload.data.lastName,
+            age: action.payload.data.age,
+            phone: action.payload.data.phone
+          };
+        }
+        return object;
+      });
+      return {
+        ...state,
+        data: newArray
       };
     default:
       return {
@@ -44,4 +61,11 @@ export async function saveNewData(dispatch: any, newData: DataCustomer) {
     .post('/customer', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createData(data)));
+}
+
+export async function editData(dispatch: any, newData: DataCustomer) {
+  await new EndpointRequest()
+    .put('/customer', newData)
+    .then((res) => res.json())
+    .then((data) => dispatch(action.updateData(data)));
 }
