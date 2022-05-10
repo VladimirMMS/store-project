@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Typography } from '@mui/material';
-import { Data, PropsTable } from '../../interfaces';
+import { PropsTable } from '../../interfaces';
 import ModalForm from '../modalForm/ModalForm';
-import { useSelector } from 'react-redux';
+import { useEditData } from '../../hooks/useEdit';
 
-export default function DataTable({ columns, title }: PropsTable) {
-  const { customerReducer }: any = useSelector((state) => state);
-  const { data }: Data = customerReducer;
-
-  const [open, setOpen] = useState<boolean>(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
+export default function DataTable({ columns, title, data, initialState,handlePageChange, page }: any) {
+  const {handleClose, handleOpen, setOpen, open} = useEditData()
   return (
     <div style={{ height: 400, width: '100%' }}>
       <Typography
@@ -29,13 +23,18 @@ export default function DataTable({ columns, title }: PropsTable) {
       <Button onClick={handleOpen} style={{ marginLeft: '10px' }}>
         Create a {title}
       </Button>
-      <ModalForm open={open} handleClose={handleClose} setOpen={setOpen} />
+      <ModalForm open={open} handleClose={handleClose} setOpen={setOpen} initialState={initialState}/>
       <DataGrid
-        rowHeight={75}
+        rows={data.rows} 
         columns={columns}
-        rows={data}
+        pagination
         pageSize={10}
-        rowsPerPageOptions={[5]}
+        rowCount={data.count}
+        paginationMode="server"
+        onPageChange={handlePageChange}
+        rowHeight={75}
+        autoHeight={true}
+        page={page}
         disableSelectionOnClick
       />
     </div>
