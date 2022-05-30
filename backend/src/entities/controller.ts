@@ -1,3 +1,5 @@
+import { Op } from 'sequelize/dist';
+
 export default class DefaultController {
   model: any;
 
@@ -9,8 +11,39 @@ export default class DefaultController {
     return this.model.create(body);
   }
 
-  async getAllService(): Promise<object> {
-    return this.model.findAll();
+  async getAllService(request: any): Promise<object> {
+    let orderQuery: any = [];
+    let condition = {};
+    const operator: any = {
+      equals: Op.eq,
+      contains: Op.substring,
+      startsWith: Op.startsWith,
+      endsWith: Op.endsWith,
+      isAnyOf: Op.not
+    };
+    const { page, pageSize, field, sort, filter } = request.query;
+    const filterObject = JSON.parse(filter);
+    const { value, columnField, operatorValue } = filterObject;
+
+    if (value && columnField && operatorValue) {
+      condition = {
+        where: {
+          [columnField]: {
+            [operator[operatorValue]]: value
+          }
+        }
+      };
+    }
+
+    if (field !== '' && sort !== '') {
+      orderQuery.push([field, sort]);
+    }
+    return this.model.findAndCountAll({
+      order: orderQuery,
+      offset: page * pageSize,
+      limit: pageSize,
+      ...condition
+    });
   }
 
   async getServiceById(id: any): Promise<object> {
@@ -20,7 +53,11 @@ export default class DefaultController {
   }
 
   async updateService(request: any): Promise<object> {
-    return this.model.update(request.body, {
+    await this.model.update(request.body, {
+      where: { id: request.params.id }
+    });
+
+    return this.model.findOne({
       where: { id: request.params.id }
     });
   }
