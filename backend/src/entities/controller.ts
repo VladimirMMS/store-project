@@ -1,49 +1,47 @@
-import { Op } from 'sequelize/dist';
+import { getModels } from '../db/models';
+import { getManagement } from '../utils/getManagement';
 
 export default class DefaultController {
   model: any;
 
-  constructor(model: any) {
+  modelName: string;
+
+  constructor(model: any, modelName: string) {
     this.model = model;
+    this.modelName = modelName;
   }
 
   async createService(body: any): Promise<object> {
     return this.model.create(body);
   }
 
-  async getAllService(request: any): Promise<object> {
-    let orderQuery: any = [];
-    let condition = {};
-    const operator: any = {
-      equals: Op.eq,
-      contains: Op.substring,
-      startsWith: Op.startsWith,
-      endsWith: Op.endsWith,
-      isAnyOf: Op.not
-    };
-    const { page, pageSize, field, sort, filter } = request.query;
-    const filterObject = JSON.parse(filter);
-    const { value, columnField, operatorValue } = filterObject;
-
-    if (value && columnField && operatorValue) {
-      condition = {
-        where: {
-          [columnField]: {
-            [operator[operatorValue]]: value
+  async getAllService(request: any) {
+    let inc = {};
+    const { Category, Customer } = await getModels();
+    switch (this.modelName) {
+      case 'Product':
+        inc = {
+          include: {
+            model: Category,
+            attributes: ['name']
           }
-        }
-      };
+        };
+        return getManagement(request.query, this.model, inc);
+      case 'Customer':
+        return getManagement(request.query, this.model, inc);
+      case 'Order':
+        inc = {
+          include: {
+            model: Customer,
+            attributes: ['name']
+          }
+        };
+        return getManagement(request.query, this.model, inc);
+      case 'Category':
+        return getManagement(request.query, this.model, inc);
+      default:
+        break;
     }
-
-    if (field !== '' && sort !== '') {
-      orderQuery.push([field, sort]);
-    }
-    return this.model.findAndCountAll({
-      order: orderQuery,
-      offset: page * pageSize,
-      limit: pageSize,
-      ...condition
-    });
   }
 
   async getServiceById(id: any): Promise<object> {

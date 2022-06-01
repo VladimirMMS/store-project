@@ -7,10 +7,11 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_DB,
   DB_HOST = 'localhost',
-  DB_PORT = 4321
+  DB_PORT = 4600
 } = process.env;
 
 const PG_URL = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}`;
+console.log(PG_URL);
 
 const BASE_CONFIG = {
   url: PG_URL,
