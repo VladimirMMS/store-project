@@ -3,11 +3,9 @@ import { OrderAttribute } from '../../interfaces/index';
 
 export default (sequelize: any, DataTypes: any) => {
   class Order extends Model<OrderAttribute> {
-    orderId!: string;
+    id!: string;
 
     customerId!: string;
-
-    productId!: string;
 
     address!: string;
 
@@ -15,23 +13,18 @@ export default (sequelize: any, DataTypes: any) => {
       Order.belongsTo(models.Customer, {
         foreignKey: 'customerId'
       });
-      Order.belongsTo(models.Product, {
-        foreignKey: 'productId'
+      Order.hasMany(models.OrderItem, {
+        foreignKey: 'orderId'
       });
     }
   }
   Order.init(
     {
-      orderId: {
+      id: {
         type: DataTypes.UUID,
         defaultValue: UUIDV4,
         allowNull: false,
         primaryKey: true
-      },
-      productId: {
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
-        allowNull: false
       },
       customerId: {
         type: DataTypes.UUID,

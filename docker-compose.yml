@@ -5,7 +5,7 @@ services :
     container_name: store-db
     restart: always
     ports:
-      - 4321:5432
+      - 4600:5432
     volumes:
       - ./docker/postgres/data:/var/lib/postgres/data
     env_file: './backend/.env'

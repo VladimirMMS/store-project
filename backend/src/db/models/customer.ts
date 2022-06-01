@@ -8,7 +8,7 @@ export default (sequelize: any, DataTypes: any) => {
 
     name!: string;
 
-    lastname!: string;
+    lastName!: string;
 
     age!: number;
 
@@ -32,12 +32,12 @@ export default (sequelize: any, DataTypes: any) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      lastname: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false
       },
       age: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DATE,
         allowNull: false
       },
       phone: {

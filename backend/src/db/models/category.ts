@@ -8,10 +8,6 @@ export default (sequelize: any, DataTypes: any) => {
 
     name!: string;
 
-    price!: number;
-
-    categoryId!: number;
-
     static associate(models: any) {
       Category.hasMany(models.Product, {
         foreignKey: 'categoryId'
