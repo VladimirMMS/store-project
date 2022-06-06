@@ -1,7 +1,7 @@
 export interface CustomerAttribute {
   id: string;
   name: string;
-  lastname: string;
+  lastName: string;
   age: number;
   phone: number;
 }
@@ -30,13 +30,26 @@ export interface BodyAttribute {
 }
 
 export interface OrderAttribute {
-  orderId: string;
+  id: string;
   customerId: string;
-  productId: string;
   address: string;
 }
 
 export interface CategoryAttribute {
   id: number;
   name: string;
+}
+
+export interface Operator {
+  contains: string;
+  equals: string;
+  startsWith: string;
+  endsWith: string;
+}
+
+export interface OrderItemAttribute {
+  id: number;
+  orderId: string;
+  productId: string;
+  quantity: number;
 }

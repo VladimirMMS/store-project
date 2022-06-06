@@ -6,7 +6,7 @@ const theme = createTheme({
     primary: {
       main: red[500]
     }
-  }
+  },
 });
 
 export default theme;
