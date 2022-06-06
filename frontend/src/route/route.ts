@@ -18,7 +18,7 @@ export const routes: RouteInterface[] = [
     name: 'Order'
   },
   {
-    path: '/admin/Category',
+    path: '/admin/category',
     component: Category,
     name: 'Category'
   }
