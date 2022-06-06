@@ -8,5 +8,5 @@ function capitalize(str: string) {
 export async function getController(modelName: string, controllerPath: string) {
   const model = await getModel(capitalize(modelName));
   const { default: controller } = await import(path.resolve(controllerPath));
-  return new controller(model);
+  return new controller(model, capitalize(modelName));
 }

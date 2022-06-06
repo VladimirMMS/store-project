@@ -33,6 +33,7 @@ export default function EditModal({ open, handleClose, setOpen, value }: any) {
           <FormCreate setOpen={setOpen} initialState={value}/>
         </Box>
       </Modal>
+      
     </div>
   );
 }

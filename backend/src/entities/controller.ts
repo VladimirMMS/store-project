@@ -1,4 +1,4 @@
-import { getModels } from '../db/models';
+import { getModel, getModels } from '../db/models';
 import { getManagement } from '../utils/getManagement';
 
 export default class DefaultController {
@@ -12,6 +12,17 @@ export default class DefaultController {
   }
 
   async createService(body: any): Promise<object> {
+    if (this.modelName === 'Product') {
+      const Category = await getModel('Category');
+      const categoryFound = await Category.findOne({ where: { id: body.categoryId } });
+      if (categoryFound) {
+        const product = await this.model.create(body);
+        return {
+          ...product.dataValues,
+          category: categoryFound.name
+        };
+      }
+    }
     return this.model.create(body);
   }
 
