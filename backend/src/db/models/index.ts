@@ -1,7 +1,7 @@
 'use strict';
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
-import config from '../config/config';
+const config = require('../config/config');
 import glob from 'fast-glob';
 
 dotenv.config();

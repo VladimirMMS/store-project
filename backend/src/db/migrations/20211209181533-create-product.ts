@@ -1,18 +1,25 @@
 'use strict';
+const { DataTypes, UUIDV4 } = require('sequelize/dist');
+
 module.exports = {
   up: async (queryInterface: any, Sequelize: any) => {
     await queryInterface.createTable('Products', {
       id: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        primaryKey: true
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: false
       },
       price: {
-        type: Sequelize.INTEGER,
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       createdAt: {

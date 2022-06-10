@@ -1,6 +1,6 @@
 import { Op } from 'sequelize/dist';
 
-export async function getManagement(req: any, currentModel: any, assoModel: any) {
+export async function entitiesManagement(req: any, currentModel: any, assoModel: any) {
   let orderQuery: any = [];
   let condition = {};
   const operator: any = {

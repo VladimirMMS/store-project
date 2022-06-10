@@ -1,21 +1,29 @@
 'use strict';
+
 module.exports = {
   up: async (queryInterface: any, Sequelize: any) => {
     await queryInterface.createTable('Customers', {
       id: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
+        primaryKey: true
       },
       name: {
-        type: Sequelize.STRING
+        type: DataTypes.STRING,
+        allowNull: false
       },
-      lastname: {
-        type: Sequelize.STRING
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false
       },
-      age: {
-        type: Sequelize.INTEGER
+      date: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      phone: {
+        type: DataTypes.STRING(10),
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

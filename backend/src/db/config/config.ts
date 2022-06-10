@@ -1,6 +1,4 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
+require('dotenv').config();
 
 const {
   POSTGRES_USER,
@@ -11,7 +9,6 @@ const {
 } = process.env;
 
 const PG_URL = `postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:${DB_PORT}/${POSTGRES_DB}`;
-console.log(PG_URL);
 
 const BASE_CONFIG = {
   url: PG_URL,
@@ -22,7 +19,7 @@ const BASE_CONFIG = {
   }
 };
 
-export = {
+module.exports = {
   development: BASE_CONFIG,
   test: {
     username: process.env.POSTGRES_USER,

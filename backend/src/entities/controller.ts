@@ -1,58 +1,22 @@
-import { getModel, getModels } from '../db/models';
-import { getManagement } from '../utils/getManagement';
+import { DataManagement } from '../utils/dataManagement';
 
-export default class DefaultController {
+export default class DefaultController extends DataManagement {
   model: any;
 
   modelName: string;
 
   constructor(model: any, modelName: string) {
+    super(model, modelName);
     this.model = model;
     this.modelName = modelName;
   }
 
   async createService(body: any): Promise<object> {
-    if (this.modelName === 'Product') {
-      const Category = await getModel('Category');
-      const categoryFound = await Category.findOne({ where: { id: body.categoryId } });
-      if (categoryFound) {
-        const product = await this.model.create(body);
-        return {
-          ...product.dataValues,
-          category: categoryFound.name
-        };
-      }
-    }
     return this.model.create(body);
   }
 
   async getAllService(request: any) {
-    let inc = {};
-    const { Category, Customer } = await getModels();
-    switch (this.modelName) {
-      case 'Product':
-        inc = {
-          include: {
-            model: Category,
-            attributes: ['name']
-          }
-        };
-        return getManagement(request.query, this.model, inc);
-      case 'Customer':
-        return getManagement(request.query, this.model, inc);
-      case 'Order':
-        inc = {
-          include: {
-            model: Customer,
-            attributes: ['name']
-          }
-        };
-        return getManagement(request.query, this.model, inc);
-      case 'Category':
-        return getManagement(request.query, this.model, inc);
-      default:
-        break;
-    }
+    return super.getLogic(request);
   }
 
   async getServiceById(id: any): Promise<object> {
