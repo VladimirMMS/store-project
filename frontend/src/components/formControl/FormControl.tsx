@@ -3,12 +3,15 @@ import { Button, InputLabel, TextField, Typography } from '@mui/material';
 import { useStyle } from './style';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch } from 'react-redux';
-import { editData, createNewData } from '../../reducers/CustomerReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { editData, createNewData,  } from '../../reducers/CustomerReducer';
+import { State } from '../../interfaces';
 
 export default function FormCreate({ setOpen, initialState }: any) {
   const classes = useStyle();
   const dispatch = useDispatch();
+  const { customerReducer }: any = useSelector((state) => state);
+  const { page }: State = customerReducer;
   const formik = useFormik({
     initialValues: initialState,
     validationSchema: Yup.object({
@@ -20,12 +23,12 @@ export default function FormCreate({ setOpen, initialState }: any) {
         .strict(true)
         .matches(/^[A-Za-z]+$/)
         .required('This field is required'),
-      age: Yup.date().required(),
+      date: Yup.date().required(),
       phone: Yup.number().required('This field is required')
     }),
     onSubmit: (formData: any) => {
       if (Object.keys(initialState.name).length == 0) {
-        createNewData(dispatch, formData);
+        createNewData(dispatch, formData, page);
       }
       else {
         editData(dispatch, formData)
@@ -72,15 +75,15 @@ export default function FormCreate({ setOpen, initialState }: any) {
         </InputLabel>
         <TextField
         className={classes.input}
-        name="age"
+        name="date"
         placeholder="Type Your Birthday"
         type="date"
         variant="outlined"
         autoComplete="off"
         color="primary"
         onChange={formik.handleChange}
-        value={formik.values.age}
-        error={Boolean(formik.errors.age)}
+        value={formik.values.date}
+        error={Boolean(formik.errors.date)}
       />
 
         <InputLabel htmlFor="my-input">Phone</InputLabel>

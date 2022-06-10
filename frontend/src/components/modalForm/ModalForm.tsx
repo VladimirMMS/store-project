@@ -1,9 +1,10 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import FormCreate from '../formControl/FormControl';
+import ProductForm from '../productForm/productForm';
+import OrderForm from '../orderForm/OrderForm';
+import CategoryForm from '../categoryForm/CategoryForm';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -14,10 +15,10 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
-  p: 4,
+  p: 4
 };
 
-export default function ModalForm({ open, handleClose, setOpen }: any) {
+export default function ModalForm({ open, handleClose, setOpen, initialState, title }: any) {
   return (
     <div>
       <Modal
@@ -27,7 +28,36 @@ export default function ModalForm({ open, handleClose, setOpen }: any) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <FormCreate setOpen={setOpen} />
+          {(title === 'Product')? <ProductForm
+            setOpen={setOpen}
+            initialState={initialState}
+            open={open}
+            handleClose={handleClose}
+          />: (title === 'Customer') ? 
+          <FormCreate
+            setOpen={setOpen}
+            initialState={initialState}
+            open={open}
+            handleClose={handleClose}
+          
+          />: (title === 'Order') ? 
+            <OrderForm
+            setOpen={setOpen}
+            initialState={initialState}
+            open={open}
+            handleClose={handleClose}
+            />
+          : (title === 'Category') ? 
+          <CategoryForm
+          setOpen={setOpen}
+          initialState={initialState}
+          open={open}
+          handleClose={handleClose}
+          />
+          : ''
+        }
+
+
         </Box>
       </Modal>
     </div>

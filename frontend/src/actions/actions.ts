@@ -5,7 +5,8 @@ import {
   State,
   OrderState,
   DataCategory,
-  DataOrder
+  DataOrder,
+  CategoryState
 } from '../interfaces';
 
 export type CrudCustomerActions =
@@ -21,7 +22,7 @@ export type CrudProductActions =
   | { type: 'DELETE_PRODUCT'; payload: string };
 
 export type CrudCategoryActions =
-  | { type: 'GET_CATEGORY'; payload: ProductState }
+  | { type: 'GET_CATEGORY'; payload: CategoryState }
   | { type: 'CREATE_CATEGORY'; payload: DataCategory }
   | { type: 'UPDATE_CATEGORY'; payload: { data: DataCategory } }
   | { type: 'DELETE_CATEGORY'; payload: string };
@@ -36,7 +37,8 @@ export const getData = (data: State): CrudCustomerActions => ({
   type: 'GET_CUSTOMERS',
   payload: {
     rows: data.rows,
-    count: data.count
+    count: data.count,
+    page: data.page
   }
 });
 
@@ -59,7 +61,8 @@ export const getProductData = (data: ProductState): CrudProductActions => ({
   type: 'GET_PRODUCT',
   payload: {
     rows: data.rows,
-    count: data.count
+    count: data.count,
+    page: data.page
   }
 });
 
@@ -82,7 +85,8 @@ export const getCategoryData = (data: ProductState): CrudCategoryActions => ({
   type: 'GET_CATEGORY',
   payload: {
     rows: data.rows,
-    count: data.count
+    count: data.count,
+    page: data.page
   }
 });
 
@@ -105,7 +109,8 @@ export const getOrderData = (data: OrderState): CrudOrderActions => ({
   type: 'GET_ORDER',
   payload: {
     rows: data.rows,
-    count: data.count
+    count: data.count,
+    page: data.page
   }
 });
 
