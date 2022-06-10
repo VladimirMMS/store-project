@@ -1,24 +1,21 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useStyle } from './style';
 import { NavLink } from 'react-router-dom';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Header() {
   const classes = useStyle();
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar>
-        <Toolbar>
-          <Typography variant="h6" component="div">
-            <NavLink to='/admin' className={classes.fontLetter}>Store Administration</NavLink>
-          </Typography>
+    <>
+      {/* <AppBar position="static" style={{background: 'white'}}>
+        <Toolbar variant="dense">
+
         </Toolbar>
-      </AppBar>
-      <Toolbar />
-    </React.Fragment>
+      </AppBar> */}
+    </>
   );
 }
+
+
