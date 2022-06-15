@@ -1,12 +1,9 @@
-import { DataManagement } from '../utils/dataManagement';
-
-export default class DefaultController extends DataManagement {
+export default class DefaultController {
   model: any;
 
   modelName: string;
 
   constructor(model: any, modelName: string) {
-    super(model, modelName);
     this.model = model;
     this.modelName = modelName;
   }
@@ -15,8 +12,8 @@ export default class DefaultController extends DataManagement {
     return this.model.create(body);
   }
 
-  async getAllService(request: any) {
-    return super.getLogic(request);
+  async getAllService() {
+    return this.model.findAll();
   }
 
   async getServiceById(id: any): Promise<object> {

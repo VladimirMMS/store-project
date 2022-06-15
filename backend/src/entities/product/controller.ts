@@ -1,3 +1,4 @@
+import { entitiesManagement } from '../../utils/getManagement';
 import DefaultController from '../controller';
 
 export default class ProductController extends DefaultController {
@@ -7,5 +8,9 @@ export default class ProductController extends DefaultController {
     return this.model.findAll({
       where: { name: request.params.category }
     });
+  }
+
+  async getProductService(request: any, include: any) {
+    return entitiesManagement(request.query, this.model, include);
   }
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { SortType } from "../interfaces";
-import { fetchData } from "../reducers/CustomerReducer";
+import { customerFetchData } from "../reducers/CustomerReducer";
 
 export function useTableManage(funcionType: any) {
   const dispatch = useDispatch();

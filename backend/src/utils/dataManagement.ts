@@ -1,12 +1,14 @@
 import { getModels } from '../db/models';
+import DefaultController from '../entities/controller';
 import { entitiesManagement } from './getManagement';
 
-export class DataManagement {
+export class DataManagement extends DefaultController {
   model: any;
 
   modelName: string;
 
   constructor(model: any, modelName: string) {
+    super(model, modelName);
     this.model = model;
     this.modelName = modelName;
   }

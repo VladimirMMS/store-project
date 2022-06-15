@@ -1,17 +1,23 @@
 import { useState } from 'react';
 import { Row } from '../interfaces';
 
-export function useEditData() {
+export function useEditData(initialState:any) {
   const [open, setOpen] = useState<boolean>(false);
-  const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState(initialState);
+  const handleClose = () => {
+    setOpen(false)
+    setValue(initialState)
+  };
 
   const handleEdit = (event: any, { row }: Row) => {
     setValue(row)
     setOpen(true)
   };
  
+  const handleCreate = () => {
+    setOpen(true)
+  };
 
   return {
       open,
@@ -20,5 +26,6 @@ export function useEditData() {
       handleOpen,
       setOpen,
       value,
+      handleCreate
   }
 }

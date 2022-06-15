@@ -21,8 +21,9 @@ export default function Product() {
   const { productReducer }: any = useSelector((state) => state);
   const { rows, count }: ProductState = productReducer;
   const { open, handleClose, handleEdit, setOpen,handleCreate, value } = useEditData(initialState)
-  const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData)
   const { page, handlePageChange, handleSort, handleFilter } = useTableManage(fetchData)
+  const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData, page)
+  
   const columns = [
     { field: 'id', headerName: 'productId', width: 300, editable: false },
     { field: 'name', headerName: 'ProductName', width: 250, editable: false },
