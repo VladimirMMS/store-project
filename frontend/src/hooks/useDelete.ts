@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { Row } from '../interfaces';
 import { useDispatch } from 'react-redux';
-import { deleteData } from '../reducers/CustomerReducer';
 
-export function useDeleteData() {
+export function useDeleteData(deleteData: any, page: number) {
   const dispatch = useDispatch()
   const [openDelete, setDeleteOpen] = useState<boolean>(false);
   const handleDeleteClose = () => setDeleteOpen(false);
@@ -13,7 +12,7 @@ export function useDeleteData() {
     setDeleteOpen(true);
   };
   const handleConfirm = () => {
-    deleteData(dispatch, value)
+    deleteData(dispatch, value, page)
     setDeleteOpen(false);
   };
 

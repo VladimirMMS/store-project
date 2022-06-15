@@ -1,14 +1,23 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Typography } from '@mui/material';
-import { PropsTable } from '../../interfaces';
 import ModalForm from '../modalForm/ModalForm';
 import { useEditData } from '../../hooks/useEdit';
+import ProductForm from '../productForm/productForm';
 
-export default function DataTable({ columns, title, data, initialState,handlePageChange, page }: any) {
-  const {handleClose, handleOpen, setOpen, open} = useEditData()
+export default function DataTable({
+  columns,
+  title,
+  rows,
+  count,
+  initialState,
+  handlePageChange,
+  handleSort,
+  handleFilter,
+  page }: any) {
+  // const { handleClose, handleOpen, setOpen, open } = useEditData()
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
       <Typography
         style={{
           paddingTop: '40px',
@@ -20,21 +29,28 @@ export default function DataTable({ columns, title, data, initialState,handlePag
       >
         {title}Table
       </Typography>
-      <Button onClick={handleOpen} style={{ marginLeft: '10px' }}>
+      {/* <Button onClick={handleOpen} style={{ marginLeft: '10px', WebkitBoxPack: 'start', WebkitJustifyContent: 'start' }}>
         Create a {title}
-      </Button>
-      <ModalForm open={open} handleClose={handleClose} setOpen={setOpen} initialState={initialState}/>
+      </Button> */}
+
       <DataGrid
-        rows={data.rows} 
+        rows={rows}
         columns={columns}
         pagination
         pageSize={10}
-        rowCount={data.count}
+        rowCount={count}
         paginationMode="server"
+        sortingMode="server"
+        filterMode="server"
         onPageChange={handlePageChange}
+        onFilterModelChange={handleFilter}
+        sortingOrder={['desc', 'asc']}
+        onSortModelChange={handleSort}
         rowHeight={75}
+        autoPageSize={true}
         autoHeight={true}
         page={page}
+
         disableSelectionOnClick
       />
     </div>

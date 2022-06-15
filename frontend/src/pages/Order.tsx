@@ -4,12 +4,10 @@ import { useSelector } from 'react-redux';
 import { OrderState, RowOrder } from '../interfaces';
 import { deleteData, fetchData } from '../reducers/OrderReducer';
 import { useEditData } from '../hooks/useEdit';
-import EditModal from '../components/editModal/EditModal';
 import { useDeleteData } from '../hooks/useDelete';
 import AlertDialog from '../components/alertDialog/AlertDialog';
 import { useTableManage } from '../hooks/useTableManage';
-import ModalForm from '../components/modalForm/ModalForm';
-
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   customerId: '',
@@ -17,15 +15,17 @@ const initialState = {
 }
 
 
-
-
 export default function Order() {
-
+  let navigate = useNavigate();
   const { orderReducer }: any = useSelector((state) => state);
   const { rows, count }: OrderState = orderReducer;
-  const { open, handleClose, handleEdit, setOpen, value, handleCreate } = useEditData(initialState)
-  const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData)
+  const { open, handleClose, handleEdit, setOpen, value } = useEditData(initialState)
   const { page, handlePageChange, handleSort, handleFilter } = useTableManage(fetchData)
+  const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData, page)
+  const handleCreate = () => {
+    navigate('/admin/order/create');
+
+  }
   const columns = [
     { field: 'id', headerName: 'ID', width: 300, editable: false },
     { field: 'customer', headerName: 'Customer', width: 250, editable: false },
@@ -58,7 +58,6 @@ export default function Order() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
       <AlertDialog open={openDelete} handleClose={handleDeleteClose} handleConfirm={handleConfirm} />
-      <ModalForm open={open} handleClose={handleClose} setOpen={setOpen} initialState={value} title='Order' />
       <Button
         onClick={handleCreate}
         style={{

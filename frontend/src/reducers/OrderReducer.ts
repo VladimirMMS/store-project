@@ -1,15 +1,17 @@
-import { DataCategory, DataOrder, SortType, State } from '../interfaces';
+import { DataOrder, OrderState, SortType } from '../interfaces';
 import { EndpointRequest } from '../utils/fetch';
 import * as action from '../actions/actions';
 
-const initalState: State = {
+const initalState: OrderState = {
   count: 0,
-  rows: []
+  rows: [],
+  page: 0
 };
 
 export function orderReducer(state = initalState, action: action.CrudOrderActions) {
   switch (action.type) {
     case 'GET_ORDER':
+      console.log(action.payload.rows)
       const newRows = action.payload.rows.map((element, index) => {
         return {
           ...element,
@@ -19,15 +21,12 @@ export function orderReducer(state = initalState, action: action.CrudOrderAction
       return {
         ...state,
         rows: newRows,
-        count: action.payload.count
+        count: action.payload.count,
+        page: action.payload.page
       };
 
     case 'CREATE_ORDER':
-      return {
-        ...state,
-        rows: state.rows,
-        count: state.count + 1
-      };
+      return state;
     case 'UPDATE_ORDER':
       const newArray = state.rows.map((object) => {
         if (object.id == action.payload.data.id) {
@@ -45,14 +44,7 @@ export function orderReducer(state = initalState, action: action.CrudOrderAction
         rows: newArray
       };
     case 'DELETE_ORDER':
-      const rest = state.rows.filter((product) => {
-        return product.id != action.payload;
-      });
-      return {
-        ...state,
-        rows: rest,
-        count: state.count - 1
-      };
+      return state;
     default:
       return {
         ...state
@@ -74,14 +66,18 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getOrderData(res)));
+    .then((res) => dispatch(action.getOrderData({...res, page})));
 }
 
-export async function createNewData(dispatch: any, newData: DataOrder) {
-  new EndpointRequest()
+export async function createNewData(dispatch: any, newData: DataOrder, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .post('/order', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createOrderData(data)));
+
+  fetchData(dispatch, page, sort, filterValues)
 }
 
 export async function editData(dispatch: any, newData: DataOrder) {
@@ -91,9 +87,13 @@ export async function editData(dispatch: any, newData: DataOrder) {
     .then((data) => dispatch(action.updateOrderData(data)));
 }
 
-export async function deleteData(dispatch: any, id: string) {
-  new EndpointRequest()
+export async function deleteData(dispatch: any, id: string, page:number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .delete('/order', id)
     .then((res) => res.json())
     .then(() => dispatch(action.deleteOrderData(id)));
+    fetchData(dispatch, page, sort, filterValues)
+  
 }

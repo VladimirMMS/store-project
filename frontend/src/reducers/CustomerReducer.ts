@@ -1,47 +1,34 @@
 import { CrudCustomerActions } from '../actions/actions';
-import { DataCustomer, Items, SortType, State } from '../interfaces';
+import { DataCustomer, SortType, State } from '../interfaces';
 import { EndpointRequest } from '../utils/fetch';
 import * as action from '../actions/actions';
 import { getAge } from '../utils/getAge';
 
 const initalState: State = {
   count: 0,
-  rows: []
+  rows: [],
+  page: 0
 };
 
 export function customerReducer(state = initalState, action: CrudCustomerActions) {
   switch (action.type) {
     case 'GET_CUSTOMERS':
-      const newAge = action.payload.rows.map((element, index) => {
-        const each = action.payload.rows[index].age;
+      const  formatAge = action.payload.rows.map((element, index) => {
+        const eachAge = action.payload.rows[index].date;
         return {
           ...element,
-          age: getAge(each ? each : '')
+          date: getAge(eachAge ? eachAge : '')
         };
       });
       return {
         ...state,
-        rows: newAge,
-        count: action.payload.count
+        rows: formatAge,
+        count: action.payload.count,
+        page: action.payload.page
       };
 
     case 'CREATE_CUSTOMER':
-      const entirePerson = {
-        ...action.payload,
-        age: getAge(action.payload.age ? action.payload.age : '').toString()
-      };
-      if (state.rows.length < 10) {
-        return {
-          ...state,
-          rows: state.rows.concat(entirePerson),
-          count: state.count + 1
-        };
-      }
-      return {
-        ...state,
-        rows: state.rows,
-        count: state.count + 1
-      };
+      return state;
     case 'UPDATE_CUSTOMER':
       const newArray = state.rows.map((object) => {
         if (object.id == action.payload.data.id) {
@@ -49,7 +36,7 @@ export function customerReducer(state = initalState, action: CrudCustomerActions
             ...object,
             name: action.payload.data.name,
             lastName: action.payload.data.lastName,
-            age: action.payload.data.age,
+            date: action.payload.data.date,
             phone: action.payload.data.phone
           };
         }
@@ -61,14 +48,7 @@ export function customerReducer(state = initalState, action: CrudCustomerActions
         rows: newArray
       };
     case 'DELETE_CUSTOMER':
-      const rest = state.rows.filter((customer) => {
-        return customer.id != action.payload;
-      });
-      return {
-        ...state,
-        rows: rest,
-        count: state.count - 1
-      };
+      return state;
     default:
       return {
         ...state
@@ -76,7 +56,7 @@ export function customerReducer(state = initalState, action: CrudCustomerActions
   }
 }
 
-export async function fetchData(
+export async function customerFetchData(
   dispatch: any,
   page: number,
   sortBy: SortType[],
@@ -90,14 +70,19 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getData(res)));
+    .then((res) => dispatch(action.getData({...res, page})));
 }
 
-export async function createNewData(dispatch: any, newData: DataCustomer) {
-  new EndpointRequest()
+export async function createNewData(dispatch: any, newData: DataCustomer, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .post('/customer', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createData(data)));
+
+    customerFetchData(dispatch, page, sort, filterValues)
+  
 }
 
 export async function editData(dispatch: any, newData: DataCustomer) {
@@ -107,9 +92,13 @@ export async function editData(dispatch: any, newData: DataCustomer) {
     .then((data) => dispatch(action.updateData(data)));
 }
 
-export async function deleteData(dispatch: any, id: string) {
-  new EndpointRequest()
+export async function deleteData(dispatch: any, id: string, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .delete('/customer', id)
     .then((res) => res.json())
     .then(() => dispatch(action.deleteData(id)));
+  
+    customerFetchData(dispatch, page, sort, filterValues)
 }

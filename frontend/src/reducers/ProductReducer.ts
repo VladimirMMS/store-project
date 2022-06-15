@@ -5,7 +5,8 @@ import * as action from '../actions/actions';
 
 const initalState: State = {
   count: 0,
-  rows: []
+  rows: [],
+  page: 0
 };
 
 export function productReducer(state = initalState, action: CrudProductActions) {
@@ -21,22 +22,12 @@ export function productReducer(state = initalState, action: CrudProductActions) 
       return {
         ...state,
         rows: newRows,
-        count: action.payload.count
+        count: action.payload.count,
+        page: action.payload.page
       };
 
     case 'CREATE_PRODUCT':
-      if (state.rows.length < 10) {
-        return {
-          ...state,
-          rows: state.rows.concat(action.payload),
-          count: state.count + 1
-        };
-      }
-      return {
-        ...state,
-        rows: state.rows,
-        count: state.count + 1
-      };
+      return state;
     case 'UPDATE_PRODUCT':
       const newArray = state.rows.map((object) => {
         if (object.id == action.payload.data.id) {
@@ -55,14 +46,7 @@ export function productReducer(state = initalState, action: CrudProductActions) 
         rows: newArray
       };
     case 'DELETE_PRODUCT':
-      const rest = state.rows.filter((product) => {
-        return product.id != action.payload;
-      });
-      return {
-        ...state,
-        rows: rest,
-        count: state.count - 1
-      };
+      return state;
     default:
       return {
         ...state
@@ -76,7 +60,10 @@ export async function fetchData(
   sortBy: SortType[],
   filterValues: any
 ) {
-  const { field, sort } = sortBy[0];
+  let { field, sort } = sortBy[0];
+  if(field === 'category') {
+    field = 'categoryId'
+  }
   new EndpointRequest()
     .get(
       `/product?page=${page}&pageSize=${10}&field=${field}&sort=${sort}&filter=${JSON.stringify(
@@ -84,14 +71,18 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getProductData(res)));
+    .then((res) => dispatch(action.getProductData({...res, page})));
 }
 
-export async function createNewData(dispatch: any, newData: DataProduct) {
-  new EndpointRequest()
+export async function createNewData(dispatch: any, newData: DataProduct, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .post('/product', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createProductData(data)));
+
+  fetchData(dispatch, page, sort, filterValues)
 }
 
 export async function editData(dispatch: any, newData: DataProduct) {
@@ -104,9 +95,13 @@ export async function editData(dispatch: any, newData: DataProduct) {
     });
 }
 
-export async function deleteData(dispatch: any, id: string) {
-  new EndpointRequest()
+export async function deleteData(dispatch: any, id: string, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .delete('/product', id)
     .then((res) => res.json())
     .then(() => dispatch(action.deleteProductData(id)));
+  
+    fetchData(dispatch, page, sort, filterValues)
 }

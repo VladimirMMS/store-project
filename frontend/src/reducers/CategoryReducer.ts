@@ -1,16 +1,18 @@
 import { CrudCategoryActions } from '../actions/actions';
-import { DataCategory, SortType, State } from '../interfaces';
+import { CategoryState, DataCategory, SortType, State } from '../interfaces';
 import { EndpointRequest } from '../utils/fetch';
 import * as action from '../actions/actions';
 
-const initalState: State = {
+const initalState: CategoryState = {
   count: 0,
-  rows: []
+  rows: [],
+  page: 0
 };
 
 export function categoryReducer(state = initalState, action: CrudCategoryActions) {
   switch (action.type) {
     case 'GET_CATEGORY':
+      console.log(action.payload.rows)
       state = {
         ...state,
         rows: action.payload.rows
@@ -18,15 +20,12 @@ export function categoryReducer(state = initalState, action: CrudCategoryActions
       return {
         ...state,
         rows: action.payload.rows,
-        count: action.payload.count
+        count: action.payload.count,
+        page: action.payload.page
       };
 
     case 'CREATE_CATEGORY':
-      return {
-        ...state,
-        rows: state.rows,
-        count: state.count + 1
-      };
+      return state;
     case 'UPDATE_CATEGORY':
       const newArray = state.rows.map((object) => {
         if (object.id == action.payload.data.id) {
@@ -43,14 +42,7 @@ export function categoryReducer(state = initalState, action: CrudCategoryActions
         rows: newArray
       };
     case 'DELETE_CATEGORY':
-      const rest = state.rows.filter((product) => {
-        return product.id != action.payload;
-      });
-      return {
-        ...state,
-        rows: rest,
-        count: state.count - 1
-      };
+      return state;
     default:
       return {
         ...state
@@ -72,14 +64,19 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getCategoryData(res)));
+    .then((res) => dispatch(action.getCategoryData({...res, page})));
 }
 
-export async function createNewData(dispatch: any, newData: DataCategory) {
-  new EndpointRequest()
+export async function createNewData(dispatch: any, newData: DataCategory, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .post('/category', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createCategoryData(data)));
+  
+  fetchData(dispatch, page, sort, filterValues)
+
 }
 
 export async function editData(dispatch: any, newData: DataCategory) {
@@ -89,9 +86,13 @@ export async function editData(dispatch: any, newData: DataCategory) {
     .then((data) => dispatch(action.updateCategoryData(data)));
 }
 
-export async function deleteData(dispatch: any, id: string) {
-  new EndpointRequest()
+export async function deleteData(dispatch: any, id: string, page: number) {
+  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
+  const sort = [{field: '', sort: ''}]
+  await new EndpointRequest()
     .delete('/category', id)
     .then((res) => res.json())
     .then(() => dispatch(action.deleteCategoryData(id)));
+  
+    fetchData(dispatch, page, sort, filterValues)
 }

@@ -40,13 +40,7 @@ export default function ModalForm({ open, handleClose, setOpen, initialState, ti
             open={open}
             handleClose={handleClose}
           
-          />: (title === 'Order') ? 
-            <OrderForm
-            setOpen={setOpen}
-            initialState={initialState}
-            open={open}
-            handleClose={handleClose}
-            />
+          />
           : (title === 'Category') ? 
           <CategoryForm
           setOpen={setOpen}
@@ -56,8 +50,6 @@ export default function ModalForm({ open, handleClose, setOpen, initialState, ti
           />
           : ''
         }
-
-
         </Box>
       </Modal>
     </div>

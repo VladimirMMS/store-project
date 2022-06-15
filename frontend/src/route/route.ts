@@ -1,5 +1,6 @@
 import { RouteInterface } from '../interfaces';
-import { Product, Customer, Category, Order } from '../pages';
+import OrderRouter from '../orderRouter/orderRouter';
+import { Product, Customer, Category } from '../pages';
 
 export const routes: RouteInterface[] = [
   {
@@ -13,13 +14,13 @@ export const routes: RouteInterface[] = [
     name: 'Product'
   },
   {
-    path: '/admin/order',
-    component: Order,
+    path: '/admin/order/*',
+    component: OrderRouter,
     name: 'Order'
   },
   {
     path: '/admin/category',
     component: Category,
     name: 'Category'
-  }
+  },
 ];
