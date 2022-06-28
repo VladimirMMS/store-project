@@ -13,7 +13,7 @@ export default class ProductRoute extends DefaultRoute {
     fastify.get('/category/:category', (request: any) =>
       option.controller.getProductByCategory(request)
     );
-    fastify.get('/', (request: any) => option.controller.getProductService(request, include));
+    fastify.get('/', (request: any) => option.controller.getAllDataService(request, include));
     super.createRoute(fastify, option, done);
     done();
   }

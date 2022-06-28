@@ -5,6 +5,6 @@ export default class CustomerController extends ProductController {
 
   async getCustomerService(request: any) {
     const include = {};
-    return super.getProductService(request, include);
+    return super.getAllDataService(request, include);
   }
 }

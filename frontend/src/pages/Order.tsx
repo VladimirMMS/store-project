@@ -1,17 +1,19 @@
 import { Button } from '@mui/material';
 import DataTable from '../components/TableData/TableData';
-import { useSelector } from 'react-redux';
-import { OrderState, RowOrder } from '../interfaces';
+import { useSelector, useDispatch } from 'react-redux';
+import { orderInitial, OrderState, Row, RowOrder } from '../interfaces';
 import { deleteData, fetchData } from '../reducers/OrderReducer';
 import { useEditData } from '../hooks/useEdit';
 import { useDeleteData } from '../hooks/useDelete';
 import AlertDialog from '../components/alertDialog/AlertDialog';
 import { useTableManage } from '../hooks/useTableManage';
 import { useNavigate } from "react-router-dom";
+import { getInputCurrentState, getInputState } from '../actions/actions';
 
-const initialState = {
-  customerId: '',
-  address: '',
+const initialState: orderInitial = {
+  customer: '',
+  products: '',
+  address: ''
 }
 
 
@@ -19,10 +21,16 @@ export default function Order() {
   let navigate = useNavigate();
   const { orderReducer }: any = useSelector((state) => state);
   const { rows, count }: OrderState = orderReducer;
-  const { open, handleClose, handleEdit, setOpen, value } = useEditData(initialState)
+  const handleEdit = (event: any, { row }: any) => {
+    console.log(row)
+    navigate('/admin/order/create');
+    dispatch(getInputCurrentState(row))
+  };
   const { page, handlePageChange, handleSort, handleFilter } = useTableManage(fetchData)
   const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData, page)
+  const dispatch = useDispatch();
   const handleCreate = () => {
+    dispatch(getInputState(initialState))
     navigate('/admin/order/create');
 
   }
@@ -76,7 +84,6 @@ export default function Order() {
         title={'Order'}
         rows={rows}
         count={count}
-        initialState={initialState}
         handlePageChange={handlePageChange}
         page={page}
         handleSort={handleSort}

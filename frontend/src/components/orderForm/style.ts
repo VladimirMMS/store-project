@@ -17,7 +17,7 @@ export const useStyle = makeStyles({
   },
   container: {
     background: 'white',
-    width: '30%',
+    width: '60%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',

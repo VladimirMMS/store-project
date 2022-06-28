@@ -10,7 +10,6 @@ export default function DataTable({
   title,
   rows,
   count,
-  initialState,
   handlePageChange,
   handleSort,
   handleFilter,

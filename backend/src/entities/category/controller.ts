@@ -5,6 +5,6 @@ export default class CategoryController extends ProductController {
 
   async getCategoryService(request: any) {
     const include = {};
-    return super.getProductService(request, include);
+    return super.getAllDataService(request, include);
   }
 }
