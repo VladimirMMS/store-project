@@ -10,7 +10,7 @@ export default class ProductController extends DefaultController {
     });
   }
 
-  async getProductService(request: any, include: any) {
+  async getAllDataService(request: any, include: any) {
     return entitiesManagement(request.query, this.model, include);
   }
 }

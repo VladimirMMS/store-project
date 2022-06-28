@@ -8,6 +8,12 @@ export interface RouteInterface {
   children?: RouteInterface[];
 }
 
+export interface orderInitial {
+  customer: string,
+  products: string,
+  address: string
+}
+
 export interface DataCustomer {
   id?: string;
   name?: string;
@@ -36,6 +42,7 @@ export interface DataOrder {
   customerId?: string;
   address?: string;
   Customer?: DataCustomer
+  value?: string
 }
 
 export interface Row {
@@ -89,10 +96,31 @@ export interface CategoryState {
   
 }
 
+export interface CarOrder {
+  id?: any;
+  customer?: string;
+  product?: string;
+  address?: string;
+  price: number;
+  quantity?: number | any;
+  total: number
+  
+}
+
+
+export interface RowCar {
+  id: any;
+  field: string
+  value: string;
+
+}
+
 export interface OrderState {
   rows: Array<DataOrder>
   count: number,
-  page: number
+  page: number,
+  order: Array<CarOrder>
+
   
 }
 

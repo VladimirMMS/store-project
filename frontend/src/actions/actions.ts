@@ -6,7 +6,10 @@ import {
   OrderState,
   DataCategory,
   DataOrder,
-  CategoryState
+  CategoryState,
+  orderInitial,
+  CarOrder,
+  RowCar
 } from '../interfaces';
 
 export type CrudCustomerActions =
@@ -29,9 +32,14 @@ export type CrudCategoryActions =
 
 export type CrudOrderActions =
   | { type: 'GET_ORDER'; payload: OrderState }
-  | { type: 'CREATE_ORDER'; payload: DataOrder }
-  | { type: 'UPDATE_ORDER'; payload: { data: DataOrder } }
+  | { type: 'CREATE_ORDER'; payload: CarOrder }
+  | { type: 'UPDATE_ORDER'; payload: RowCar }
   | { type: 'DELETE_ORDER'; payload: string };
+
+
+  export type OrderFormAction =
+  | { type: 'GET_INITIAL_STATE'; payload: orderInitial }
+  | { type: 'GET_CURRENT_STATE'; payload: orderInitial }
 
 export const getData = (data: State): CrudCustomerActions => ({
   type: 'GET_CUSTOMERS',
@@ -110,21 +118,33 @@ export const getOrderData = (data: OrderState): CrudOrderActions => ({
   payload: {
     rows: data.rows,
     count: data.count,
-    page: data.page
+    page: data.page,
+    order: data.order
   }
 });
 
-export const createOrderData = (data: DataProduct): CrudOrderActions => ({
+export const createOrderData = (data: CarOrder): CrudOrderActions => ({
   type: 'CREATE_ORDER',
   payload: data
 });
 
-export const updateOrderData = (data: object): CrudOrderActions => ({
+export const updateOrderData = (data: RowCar): CrudOrderActions => ({
   type: 'UPDATE_ORDER',
-  payload: { data }
+  payload: data
 });
 
 export const deleteOrderData = (id: string): CrudOrderActions => ({
   type: 'DELETE_ORDER',
   payload: id
+});
+
+
+export const getInputState = (data: orderInitial): OrderFormAction => ({
+  type: 'GET_INITIAL_STATE',
+  payload: data 
+});
+
+export const getInputCurrentState= (data: orderInitial): OrderFormAction => ({
+  type: 'GET_CURRENT_STATE',
+  payload: data 
 });

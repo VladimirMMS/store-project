@@ -5,19 +5,19 @@ import * as action from '../actions/actions';
 const initalState: OrderState = {
   count: 0,
   rows: [],
-  page: 0
+  page: 0,
+  order: []
 };
 
 export function orderReducer(state = initalState, action: action.CrudOrderActions) {
   switch (action.type) {
     case 'GET_ORDER':
-      console.log(action.payload.rows)
       const newRows = action.payload.rows.map((element, index) => {
         return {
           ...element,
           customer: action.payload.rows[index].Customer?.name
-        }
-      })
+        };
+      });
       return {
         ...state,
         rows: newRows,
@@ -26,22 +26,49 @@ export function orderReducer(state = initalState, action: action.CrudOrderAction
       };
 
     case 'CREATE_ORDER':
-      return state;
-    case 'UPDATE_ORDER':
-      const newArray = state.rows.map((object) => {
-        if (object.id == action.payload.data.id) {
+      let updated = false;
+      const newOrder = state.order.map((object) => {
+        if (object.product === action.payload.product) {
+          updated = true;
           return {
             ...object,
-            customerId: action.payload.data.customerId,
-            address: action.payload.data.address
+            quantity: parseInt(object.quantity) + parseInt(action.payload.quantity),
+            total: (parseInt(object.quantity) + parseInt(action.payload.quantity)) * object.price
           };
         }
         return object;
       });
 
+      if (updated) {
+        return {
+          ...state,
+          order: newOrder
+        };
+      }
+      state = {
+        ...state,
+        order: state.order.concat({
+          ...action.payload,
+          total: action.payload.price * parseInt(action.payload.quantity),
+          id: action.payload.product
+        })
+      };
+
+      return state;
+    case 'UPDATE_ORDER':
+      const newArray = state.order.map((object) => {
+        if (object.id == action.payload.id) {
+          return {
+            ...object,
+            quantity: action.payload.value,
+            total: parseInt(action.payload.value) * object.price
+          };
+        }
+        return object;
+      });
       return {
         ...state,
-        rows: newArray
+        order: newArray
       };
     case 'DELETE_ORDER':
       return state;
@@ -66,18 +93,18 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getOrderData({...res, page})));
+    .then((res) => dispatch(action.getOrderData({ ...res, page })));
 }
 
 export async function createNewData(dispatch: any, newData: DataOrder, page: number) {
-  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
-  const sort = [{field: '', sort: ''}]
+  const filterValues = { columnField: '', id: 0, operatorValue: '', value: '' };
+  const sort = [{ field: '', sort: '' }];
   await new EndpointRequest()
-    .post('/order', newData)
+    .post('/order/several', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createOrderData(data)));
 
-  fetchData(dispatch, page, sort, filterValues)
+  fetchData(dispatch, page, sort, filterValues);
 }
 
 export async function editData(dispatch: any, newData: DataOrder) {
@@ -87,13 +114,12 @@ export async function editData(dispatch: any, newData: DataOrder) {
     .then((data) => dispatch(action.updateOrderData(data)));
 }
 
-export async function deleteData(dispatch: any, id: string, page:number) {
-  const filterValues = {columnField: '', id: 0, operatorValue: '', value: ''}
-  const sort = [{field: '', sort: ''}]
+export async function deleteData(dispatch: any, id: string, page: number) {
+  const filterValues = { columnField: '', id: 0, operatorValue: '', value: '' };
+  const sort = [{ field: '', sort: '' }];
   await new EndpointRequest()
     .delete('/order', id)
     .then((res) => res.json())
     .then(() => dispatch(action.deleteOrderData(id)));
-    fetchData(dispatch, page, sort, filterValues)
-  
+  fetchData(dispatch, page, sort, filterValues);
 }
