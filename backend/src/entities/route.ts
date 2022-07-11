@@ -1,6 +1,6 @@
 export default class DefaultRoute {
   static createRoute(fastify: any, option: any, done: () => void) {
-    fastify.get('/all', (request: any) => option.controller.getAllService(request));
+    fastify.get('/', (request: any) => option.controller.getAllService(request.query));
     fastify.get('/:id', (request: any) => option.controller.getServiceById(request.params.id));
     fastify.post('/', (request: any) => option.controller.createService(request.body));
     fastify.put('/:id', (request: any) => option.controller.updateService(request));

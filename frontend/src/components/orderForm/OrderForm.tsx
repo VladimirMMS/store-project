@@ -65,9 +65,6 @@ export default function OrderForm() {
     <div className={classes.container}>
       <h2 className={classes.formTitle}>Create A Order</h2>
       <form className={classes.containerForm} onSubmit={formik.handleSubmit}>
-        <InputLabel htmlFor="my-input" className={classes.label}>
-          Select A Customer
-        </InputLabel>
         <Autocomplete
           value={undefined}
           disablePortal
@@ -76,21 +73,18 @@ export default function OrderForm() {
           onChange={(event, value) => {
             formik.setFieldValue("customer", value)
           }}
-          style={{ width: '100%' }}
+          style={{ width: '100%', marginRight: '20px' }}
           renderInput={(params) =>
             <TextField
               {...params}
-              label="Customer"
+              label="Select a Customer"
 
             />}
         />
-        <InputLabel htmlFor="my-input" className={classes.label}>
-          Select A Product
-        </InputLabel>
         <Autocomplete
           id="product"
           value={formik.values.product || null}
-          sx={{ width: '100%' }}
+          style={{ width: '100%', marginRight: '20px' }}
           options={productRows.map((option) => option.name)}
           onChange={(event, value) => {
             formik.setFieldValue("product", value)
@@ -106,18 +100,16 @@ export default function OrderForm() {
           }}
           renderInput={(params) => (
             <TextField {...params}
-              label="Product"
+              label="Select Product"
               margin="normal"
             />
           )}
         />
 
-        <InputLabel htmlFor="my-input" className={classes.label}>
-          Qty
-        </InputLabel>
         <Input
-
+          style={{ width: '20%' }}
           type='number'
+          placeholder='QYT'
           inputProps={{
             step: 1,
             min: 1,
@@ -132,11 +124,9 @@ export default function OrderForm() {
 
         />
 
-        <InputLabel htmlFor="my-input" className={classes.label}>
-          Adress
-        </InputLabel>
         <TextField
           className={classes.input}
+          style={{ marginLeft: '20px' }}
           type="text"
           name="address"
           variant="outlined"
@@ -145,7 +135,7 @@ export default function OrderForm() {
           value={undefined}
           error={Boolean(formik.errors.address)}
         />
-        <Button variant="contained" style={{ width: '90px', marginTop: '30px', marginBottom: '30px' }} type="submit">
+        <Button variant="contained" style={{ width: '90px', marginTop: '30px', marginBottom: '30px', marginLeft: '20px' }} type="submit">
           Add
         </Button>
       </form>

@@ -9,7 +9,7 @@ export default (sequelize: any, DataTypes: any) => {
     name!: string;
 
     static associate(models: any) {
-      Category.hasMany(models.Product, {
+      return Category.hasMany(models.Product, {
         foreignKey: 'categoryId'
       });
     }

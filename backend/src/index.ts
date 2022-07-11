@@ -18,7 +18,7 @@ server.get('/', async function () {
 server.listen(5002, async (err, address) => {
   const db = await initDb();
   getAssocation();
-  db.sequelize.sync({ force: false }).then(() => {
+  db.sequelize.sync({ force: true }).then(() => {
     return;
   });
   if (err) {
