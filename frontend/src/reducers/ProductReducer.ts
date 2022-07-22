@@ -72,7 +72,6 @@ export async function fetchData(
     )
     .then((respon) => respon.json())
     .then((res) => {
-      console.log(res.rows[0].name)
       dispatch(action.getProductData({...res, page}))
     });
 }
