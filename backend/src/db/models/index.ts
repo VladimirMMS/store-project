@@ -20,17 +20,15 @@ async function initDb() {
       const model = models(sequelize, Sequelize);
       db[model.name] = model;
     });
-
-  db.sequelize = sequelize;
-  db.Sequelize = Sequelize;
-  return db;
-}
-export async function getAssocation() {
   Object.keys(db).forEach((modelName) => {
     if (db[modelName].associate) {
       db[modelName].associate(db);
     }
   });
+
+  db.sequelize = sequelize;
+  db.Sequelize = Sequelize;
+  return db;
 }
 
 export async function getModels() {
