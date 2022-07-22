@@ -1,4 +1,4 @@
-import { DataOrder, OrderState, SortType } from '../interfaces';
+import { CarOrder, DataOrder, OrderState, SortType } from '../interfaces';
 import { EndpointRequest } from '../utils/fetch';
 import * as action from '../actions/actions';
 
@@ -6,7 +6,9 @@ const initalState: OrderState = {
   count: 0,
   rows: [],
   page: 0,
-  order: []
+  order: {
+    products: []
+  }
 };
 
 export function orderReducer(state = initalState, action: action.CrudOrderActions) {
@@ -27,13 +29,14 @@ export function orderReducer(state = initalState, action: action.CrudOrderAction
 
     case 'CREATE_ORDER':
       let updated = false;
-      const newOrder = state.order.map((object) => {
-        if (object.product === action.payload.product) {
+      const newOrder = state.order.products?.map((object) => {
+        if (object.name === action.payload.products[0].name) {
           updated = true;
           return {
             ...object,
-            quantity: parseInt(object.quantity) + parseInt(action.payload.quantity),
-            total: (parseInt(object.quantity) + parseInt(action.payload.quantity)) * object.price
+            quantity: parseInt(object.quantity) + parseInt(action.payload.products[0].quantity),
+            total:
+              (parseInt(object.quantity) + parseInt(action.payload.products[0].quantity)) * parseInt(object.price) 
           };
         }
         return object;
@@ -42,36 +45,63 @@ export function orderReducer(state = initalState, action: action.CrudOrderAction
       if (updated) {
         return {
           ...state,
-          order: newOrder
+          order: {
+            customer: action.payload.customer,
+            address: action.payload.address,
+            ...state.order,
+            products: newOrder
+          }
         };
       }
       state = {
         ...state,
-        order: state.order.concat({
-          ...action.payload,
-          total: action.payload.price * parseInt(action.payload.quantity),
-          id: action.payload.product
-        })
+        order: {
+          ...state.order,
+          customer: action.payload.customer,
+          address: action.payload.address,
+          products: state.order.products.concat({
+            ...state.order.products,
+            ...action.payload,
+            id: action.payload.products[0].name,
+            name: action.payload.products[0].name,
+            quantity: action.payload.products[0].quantity,
+            total: action.payload.products[0].quantity * parseInt(action.payload.products[0].price),
+            price: action.payload.products[0].price
+          })
+        }
       };
 
       return state;
     case 'UPDATE_ORDER':
-      const newArray = state.order.map((object) => {
+      const newArray = state.order.products?.map((object) => {
         if (object.id == action.payload.id) {
           return {
             ...object,
             quantity: action.payload.value,
-            total: parseInt(action.payload.value) * object.price
+            total: parseInt(action.payload.value) * parseInt(object.price)
           };
         }
         return object;
       });
       return {
         ...state,
-        order: newArray
+        order: {
+          ...state.order,
+          products: newArray
+        }
       };
-    case 'DELETE_ORDER':
+
+    case 'SEND_ORDER':
       return state;
+
+    case 'DELETE_ORDER':
+      const arrayD = state.order.products?.filter((element) => {
+        return element.id !== action.payload.id;
+      });
+      return {
+        ...state,
+        order: arrayD
+      };
     default:
       return {
         ...state
@@ -96,13 +126,13 @@ export async function fetchData(
     .then((res) => dispatch(action.getOrderData({ ...res, page })));
 }
 
-export async function createNewData(dispatch: any, newData: DataOrder, page: number) {
+export async function createNewData(dispatch: any, newData: CarOrder, page: number) {
   const filterValues = { columnField: '', id: 0, operatorValue: '', value: '' };
   const sort = [{ field: '', sort: '' }];
   await new EndpointRequest()
-    .post('/order/several', newData)
+    .post('/order', newData)
     .then((res) => res.json())
-    .then((data) => dispatch(action.createOrderData(data)));
+    .then((data) => dispatch(action.sendOrderData(data)));
 
   fetchData(dispatch, page, sort, filterValues);
 }

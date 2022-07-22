@@ -23,7 +23,6 @@ export default function Product() {
   const { open, handleClose, handleEdit, setOpen,handleCreate, value } = useEditData(initialState)
   const { page, handlePageChange, handleSort, handleFilter } = useTableManage(fetchData)
   const { openDelete, handleDeleteClose, handleConfirm, handleDelete } = useDeleteData(deleteData, page)
-  
   const columns = [
     { field: 'id', headerName: 'productId', width: 300, editable: false },
     { field: 'name', headerName: 'ProductName', width: 250, editable: false },

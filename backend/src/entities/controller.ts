@@ -1,19 +1,51 @@
+import { Op } from 'sequelize/dist';
+
 export default class DefaultController {
   model: any;
 
-  modelName: string;
+  include: any;
 
-  constructor(model: any, modelName: string) {
+  constructor(model: any, include: any) {
     this.model = model;
-    this.modelName = modelName;
+    this.include = include;
   }
 
   async createService(body: any): Promise<object> {
     return this.model.create(body);
   }
 
-  async getAllService() {
-    return this.model.findAll();
+  async getAllService(req: any) {
+    let orderQuery: any = [];
+    let condition = {};
+    const operator: any = {
+      equals: Op.eq,
+      contains: Op.substring,
+      startsWith: Op.startsWith,
+      endsWith: Op.endsWith,
+      isAnyOf: Op.not
+    };
+    const { page, pageSize, field, sort, filter } = req;
+    const filterObject = JSON.parse(filter);
+    const { value, columnField, operatorValue } = filterObject;
+    if (value && columnField && operatorValue) {
+      condition = {
+        where: {
+          [columnField]: {
+            [operator[operatorValue]]: value
+          }
+        }
+      };
+    }
+    if (field !== '' && sort !== '') {
+      orderQuery.push([field, sort]);
+    }
+    return this.model.findAndCountAll({
+      order: orderQuery,
+      offset: page * pageSize,
+      limit: pageSize,
+      ...condition,
+      ...this.include
+    });
   }
 
   async getServiceById(id: any): Promise<object> {

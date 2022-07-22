@@ -12,7 +12,7 @@ const initalState: CategoryState = {
 export function categoryReducer(state = initalState, action: CrudCategoryActions) {
   switch (action.type) {
     case 'GET_CATEGORY':
-      console.log(action.payload.rows)
+  
       state = {
         ...state,
         rows: action.payload.rows

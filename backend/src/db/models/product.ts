@@ -13,13 +13,13 @@ export default (sequelize: any, DataTypes: any) => {
     categoryId!: number;
 
     static associate(models: any) {
-      Product.hasMany(models.OrderItem, {
-        foreignKey: 'productId'
-      });
       Product.belongsTo(models.Category, {
         onDelete: 'cascade',
         hooks: true,
         foreignKey: 'categoryId'
+      });
+      Product.hasMany(models.OrderItem, {
+        foreignKey: 'productId'
       });
     }
   }

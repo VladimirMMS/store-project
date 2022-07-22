@@ -71,7 +71,9 @@ export async function fetchData(
       )}`
     )
     .then((respon) => respon.json())
-    .then((res) => dispatch(action.getProductData({...res, page})));
+    .then((res) => {
+      dispatch(action.getProductData({...res, page}))
+    });
 }
 
 export async function createNewData(dispatch: any, newData: DataProduct, page: number) {
@@ -81,7 +83,6 @@ export async function createNewData(dispatch: any, newData: DataProduct, page: n
     .post('/product', newData)
     .then((res) => res.json())
     .then((data) => dispatch(action.createProductData(data)));
-
   fetchData(dispatch, page, sort, filterValues)
 }
 

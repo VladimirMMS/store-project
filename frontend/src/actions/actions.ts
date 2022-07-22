@@ -34,7 +34,8 @@ export type CrudOrderActions =
   | { type: 'GET_ORDER'; payload: OrderState }
   | { type: 'CREATE_ORDER'; payload: CarOrder }
   | { type: 'UPDATE_ORDER'; payload: RowCar }
-  | { type: 'DELETE_ORDER'; payload: string };
+  | { type: 'DELETE_ORDER'; payload: {id: string} }
+  | { type: 'SEND_ORDER'; payload: CarOrder }
 
 
   export type OrderFormAction =
@@ -79,7 +80,7 @@ export const createProductData = (data: DataProduct): CrudProductActions => ({
   payload: data
 });
 
-export const updateProductData = (data: object): CrudProductActions => ({
+export const updateProductData = (data:  DataProduct): CrudProductActions => ({
   type: 'UPDATE_PRODUCT',
   payload: { data }
 });
@@ -126,7 +127,15 @@ export const getOrderData = (data: OrderState): CrudOrderActions => ({
 export const createOrderData = (data: CarOrder): CrudOrderActions => ({
   type: 'CREATE_ORDER',
   payload: data
+  
 });
+
+
+export const sendOrderData = (data: CarOrder): CrudOrderActions => ({
+  type: 'SEND_ORDER',
+  payload: data
+});
+
 
 export const updateOrderData = (data: RowCar): CrudOrderActions => ({
   type: 'UPDATE_ORDER',
@@ -135,7 +144,9 @@ export const updateOrderData = (data: RowCar): CrudOrderActions => ({
 
 export const deleteOrderData = (id: string): CrudOrderActions => ({
   type: 'DELETE_ORDER',
-  payload: id
+  payload: {
+    id
+  }
 });
 
 

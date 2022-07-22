@@ -30,9 +30,11 @@ export interface DataCategory {
 export interface DataProduct {
   id?: string;
   name?: string;
-  price?: number;
+  price: string;
   categoryId?: string;
   Category?: DataCategory
+  quantity?: any;
+  total?: number;
 }
 
 
@@ -90,20 +92,12 @@ export interface ProductState {
   page: number
   
 }
-export interface CategoryState {
-  rows: Array<DataCategory>
-  count: number
-  
-}
 
-export interface CarOrder {
+export interface  CarOrder {
   id?: any;
   customer?: string;
-  product?: string;
+  products: Array<DataProduct>;
   address?: string;
-  price: number;
-  quantity?: number | any;
-  total: number
   
 }
 
@@ -119,7 +113,7 @@ export interface OrderState {
   rows: Array<DataOrder>
   count: number,
   page: number,
-  order: Array<CarOrder>
+  order: CarOrder
 
   
 }

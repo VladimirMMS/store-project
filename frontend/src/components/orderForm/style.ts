@@ -28,7 +28,7 @@ export const useStyle = makeStyles({
   },
   containerForm: {
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     alignItems: 'center',
     
   }
